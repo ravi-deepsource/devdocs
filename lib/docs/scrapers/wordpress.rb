@@ -1,23 +1,23 @@
 module Docs
   class Wordpress < UrlScraper
-    self.name = 'WordPress'
-    self.type = 'wordpress'
-    self.release = '5.2.2'
-    self.base_url = 'https://developer.wordpress.org/reference/'
-    self.initial_paths = %w(
+    self.name = "WordPress"
+    self.type = "wordpress"
+    self.release = "5.2.2"
+    self.base_url = "https://developer.wordpress.org/reference/"
+    self.initial_paths = %w[
       functions/
       hooks/
       classes/
-    )
+    ]
 
     self.links = {
-      home: 'https://wordpress.org/',
-      code: 'https://github.com/WordPress/WordPress'
+      home: "https://wordpress.org/",
+      code: "https://github.com/WordPress/WordPress"
     }
 
-    html_filters.push 'wordpress/entries', 'wordpress/clean_html'
+    html_filters.push "wordpress/entries", "wordpress/clean_html"
 
-    options[:container] = '#content-area'
+    options[:container] = "#content-area"
     options[:trailing_slash] = false
     options[:only_patterns] = [
       /\Afunctions\//,
@@ -37,8 +37,8 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://wordpress.org/download/releases/', opts)
-      doc.at_css('.releases.latest td').content
+      doc = fetch_doc("https://wordpress.org/download/releases/", opts)
+      doc.at_css(".releases.latest td").content
     end
   end
 end

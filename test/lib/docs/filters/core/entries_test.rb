@@ -1,5 +1,5 @@
-require 'test_helper'
-require 'docs'
+require "test_helper"
+require "docs"
 
 class EntriesFilterTest < MiniTest::Spec
   include FilterTestHelper
@@ -11,9 +11,9 @@ class EntriesFilterTest < MiniTest::Spec
 
   describe ":entries" do
     before do
-      stub(filter).name { 'name' }
-      stub(filter).path { 'path' }
-      stub(filter).type { 'type' }
+      stub(filter).name { "name" }
+      stub(filter).path { "path" }
+      stub(filter).type { "type" }
     end
 
     let :entries do
@@ -42,51 +42,51 @@ class EntriesFilterTest < MiniTest::Spec
 
     describe "the default entry" do
       it "has the #name, #path and #type" do
-        assert_equal 'name', entries.first.name
-        assert_equal 'path', entries.first.path
-        assert_equal 'type', entries.first.type
+        assert_equal "name", entries.first.name
+        assert_equal "path", entries.first.path
+        assert_equal "type", entries.first.type
       end
     end
 
     it "includes the #additional_entries" do
-      stub(filter).additional_entries { [['name']] }
+      stub(filter).additional_entries { [["name"]] }
       assert_equal 2, entries.length
     end
 
     describe "an additional entry" do
       it "has the given name" do
-        stub(filter).additional_entries { [['test']] }
-        assert_equal 'test', entries.last.name
+        stub(filter).additional_entries { [["test"]] }
+        assert_equal "test", entries.last.name
       end
 
       it "has a default path equal to #path" do
-        stub(filter).additional_entries { [['test']] }
-        assert_equal 'path', entries.last.path
+        stub(filter).additional_entries { [["test"]] }
+        assert_equal "path", entries.last.path
       end
 
       it "has a path with the given fragment" do
-        stub(filter).additional_entries { [['test', 'frag']] }
-        assert_equal 'path#frag', entries.last.path
+        stub(filter).additional_entries { [["test", "frag"]] }
+        assert_equal "path#frag", entries.last.path
       end
 
       it "has a path with the given path" do
-        stub(filter).additional_entries { [['test', 'custom_path#frag']] }
-        assert_equal 'custom_path#frag', entries.last.path
+        stub(filter).additional_entries { [["test", "custom_path#frag"]] }
+        assert_equal "custom_path#frag", entries.last.path
       end
 
       it "has the given type" do
-        stub(filter).additional_entries { [['test', nil, 'test']] }
-        assert_equal 'test', entries.last.type
+        stub(filter).additional_entries { [["test", nil, "test"]] }
+        assert_equal "test", entries.last.type
       end
 
       it "has a default type equal to #type" do
-        stub(filter).additional_entries { [['test']] }
-        assert_equal 'type', entries.last.type
+        stub(filter).additional_entries { [["test"]] }
+        assert_equal "type", entries.last.type
       end
 
       it "has a type equal to #type when the given type is nil" do
-        stub(filter).additional_entries { [['test', nil, nil]] }
-        assert_equal 'type', entries.last.type
+        stub(filter).additional_entries { [["test", nil, nil]] }
+        assert_equal "type", entries.last.type
       end
     end
   end
@@ -102,11 +102,11 @@ class EntriesFilterTest < MiniTest::Spec
     context "when #root_page? is false" do
       before do
         stub(filter).root_page? { false }
-        stub(filter).get_name { 'name' }
+        stub(filter).get_name { "name" }
       end
 
       it "returns #get_name" do
-        assert_equal 'name', filter.name
+        assert_equal "name", filter.name
       end
 
       it "is memoized" do
@@ -117,18 +117,18 @@ class EntriesFilterTest < MiniTest::Spec
 
   describe "#get_name" do
     it "returns 'file-name' when #slug is 'file-name'" do
-      stub(filter).slug { 'file-name' }
-      assert_equal 'file-name', filter.get_name
+      stub(filter).slug { "file-name" }
+      assert_equal "file-name", filter.get_name
     end
 
     it "returns 'file name' when #slug is '_file__name_'" do
-      stub(filter).slug { '_file__name_' }
-      assert_equal 'file name', filter.get_name
+      stub(filter).slug { "_file__name_" }
+      assert_equal "file name", filter.get_name
     end
 
     it "returns 'file.name' when #slug is 'file/name'" do
-      stub(filter).slug { 'file/name' }
-      assert_equal 'file.name', filter.get_name
+      stub(filter).slug { "file/name" }
+      assert_equal "file.name", filter.get_name
     end
   end
 
@@ -143,11 +143,11 @@ class EntriesFilterTest < MiniTest::Spec
     context "when #root_page? is false" do
       before do
         stub(filter).root_page? { false }
-        stub(filter).get_type { 'type' }
+        stub(filter).get_type { "type" }
       end
 
       it "returns #get_type" do
-        assert_equal 'type', filter.type
+        assert_equal "type", filter.type
       end
 
       it "is memoized" do

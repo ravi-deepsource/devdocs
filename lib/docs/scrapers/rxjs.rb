@@ -1,26 +1,26 @@
-require 'yajl/json_gem'
+require "yajl/json_gem"
 
 module Docs
   class Rxjs < UrlScraper
-    self.name = 'RxJS'
-    self.type = 'rxjs'
-    self.release = '6.5.2'
-    self.base_url = 'https://rxjs.dev/'
-    self.root_path = 'guide/overview'
+    self.name = "RxJS"
+    self.type = "rxjs"
+    self.release = "6.5.2"
+    self.base_url = "https://rxjs.dev/"
+    self.root_path = "guide/overview"
     self.links = {
-      home: 'https://rxjs.dev/',
-      code: 'https://github.com/ReactiveX/rxjs'
+      home: "https://rxjs.dev/",
+      code: "https://github.com/ReactiveX/rxjs"
     }
 
-    html_filters.push 'rxjs/clean_html', 'rxjs/entries'
+    html_filters.push "rxjs/clean_html", "rxjs/entries"
 
     options[:follow_links] = false
     options[:only_patterns] = [/guide\//, /api\//]
     options[:skip_patterns] = [/api\/([^\/]+)\.json/]
     options[:fix_urls_before_parse] = ->(url) do
-      url.sub! %r{\A(\.\/)?guide/}, '/guide/'
-      url.sub! %r{\Aapi/}, '/api/'
-      url.sub! %r{\Agenerated/}, '/generated/'
+      url.sub! %r{\A(\./)?guide/}, "/guide/"
+      url.sub! %r{\Aapi/}, "/api/"
+      url.sub! %r{\Agenerated/}, "/generated/"
       url
     end
 
@@ -32,8 +32,8 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      json = fetch_json('https://rxjs.dev/generated/navigation.json', opts)
-      json['__versionInfo']['raw']
+      json = fetch_json("https://rxjs.dev/generated/navigation.json", opts)
+      json["__versionInfo"]["raw"]
     end
 
     private
@@ -44,18 +44,18 @@ module Docs
       Request.run "#{self.class.base_url}generated/navigation.json" do |response|
         data = JSON.parse(response.body)
         dig = ->(entry) do
-          initial_urls << url_for("generated/docs/#{entry['url']}.json") if entry['url'] && entry['url'] != 'api'
-          entry['children'].each(&dig) if entry['children']
+          initial_urls << url_for("generated/docs/#{entry["url"]}.json") if entry["url"] && entry["url"] != "api"
+          entry["children"]&.each(&dig)
         end
-        data['SideNav'].each(&dig)
+        data["SideNav"].each(&dig)
       end
 
       Request.run "#{self.class.base_url}generated/docs/api/api-list.json" do |response|
         data = JSON.parse(response.body)
         dig = ->(entry) do
-          initial_urls << url_for("generated/docs/#{entry['path']}.json") if entry['path']
-          initial_urls << url_for("generated/docs/api/#{entry['name']}.json") if entry['name'] && !entry['path']
-          entry['items'].each(&dig) if entry['items']
+          initial_urls << url_for("generated/docs/#{entry["path"]}.json") if entry["path"]
+          initial_urls << url_for("generated/docs/api/#{entry["name"]}.json") if entry["name"] && !entry["path"]
+          entry["items"]&.each(&dig)
         end
         data.each(&dig)
       end
@@ -67,27 +67,27 @@ module Docs
     end
 
     def handle_response(response)
-      if response.mime_type.include?('json')
+      if response.mime_type.include?("json")
         begin
-          response.options[:response_body] = JSON.parse(response.body)['contents']
+          response.options[:response_body] = JSON.parse(response.body)["contents"]
         rescue JSON::ParserError
-          response.options[:response_body] = ''
+          response.options[:response_body] = ""
         end
-        response.headers['Content-Type'] = 'text/html'
-        response.url.path = response.url.path.sub('/generated/docs/', '/').remove('.json')
-        response.effective_url.path = response.effective_url.path.sub('/generated/docs/', '/').remove('.json')
+        response.headers["Content-Type"] = "text/html"
+        response.url.path = response.url.path.sub("/generated/docs/", "/").remove(".json")
+        response.effective_url.path = response.effective_url.path.sub("/generated/docs/", "/").remove(".json")
       end
       super
     end
 
     def parse(response)
-      response.body.gsub! '<code-example', '<pre'
-      response.body.gsub! '</code-example', '</pre'
-      response.body.gsub! '<code-pane', '<pre'
-      response.body.gsub! '</code-pane', '</pre'
-      response.body.gsub! '<live-example></live-example>', 'live example'
-      response.body.gsub! '<live-example', '<span'
-      response.body.gsub! '</live-example', '</span'
+      response.body.gsub! "<code-example", "<pre"
+      response.body.gsub! "</code-example", "</pre"
+      response.body.gsub! "<code-pane", "<pre"
+      response.body.gsub! "</code-pane", "</pre"
+      response.body.gsub! "<live-example></live-example>", "live example"
+      response.body.gsub! "<live-example", "<span"
+      response.body.gsub! "</live-example", "</span"
       super
     end
   end

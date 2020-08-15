@@ -1,28 +1,28 @@
 module Docs
   class Angularjs < UrlScraper
-    self.name = 'Angular.js'
-    self.slug = 'angularjs'
-    self.type = 'angularjs'
-    self.root_path = 'api.html'
-    self.initial_paths = %w(guide.html guide/controller.html)
+    self.name = "Angular.js"
+    self.slug = "angularjs"
+    self.type = "angularjs"
+    self.root_path = "api.html"
+    self.initial_paths = %w[guide.html guide/controller.html]
 
-    html_filters.push 'angularjs/clean_html', 'angularjs/entries', 'title'
-    text_filters.push 'angularjs/clean_urls'
+    html_filters.push "angularjs/clean_html", "angularjs/entries", "title"
+    text_filters.push "angularjs/clean_urls"
 
     options[:title] = false
-    options[:root_title] = 'Angular.js'
+    options[:root_title] = "Angular.js"
 
     options[:decode_and_clean_paths] = true
     options[:fix_urls_before_parse] = ->(str) do
-      str.gsub!('[', '%5B')
-      str.gsub!(']', '%5D')
+      str.gsub!("[", "%5B")
+      str.gsub!("]", "%5D")
       str
     end
 
     options[:fix_urls] = ->(url) do
-      %w(api guide).each do |str|
+      %w[api guide].each do |str|
         url.sub! "/partials/#{str}/#{str}/", "/partials/#{str}/"
-        url.sub! %r{/#{str}/img/}, '/img/'
+        url.sub! %r{/#{str}/img/}, "/img/"
         url.sub! %r{/#{str}/(.+?)/#{str}/}, "/#{str}/"
         url.sub! %r{/partials/#{str}/(.+?)(?<!\.html)(?:\z|(#.*))}, "/partials/#{str}/\\1.html\\2"
         url.sub! %r{/partials/(?!img).+/#{str}/}, "/partials/#{str}/"
@@ -31,10 +31,10 @@ module Docs
     end
 
     options[:only_patterns] = [%r{\Aapi}, %r{\Aguide}]
-    options[:skip] = %w(api/ng.html guide/tutorial/step_14.html guide/api.html guide/tutorial/.html)
+    options[:skip] = %w[api/ng.html guide/tutorial/step_14.html guide/api.html guide/tutorial/.html]
     options[:skip_patterns] = [
       /error\/\$compile/,
-      /misc/,
+      /misc/
     ]
 
     options[:attribution] = <<-HTML
@@ -42,45 +42,45 @@ module Docs
       Licensed under the Creative Commons Attribution License 4.0.
     HTML
 
-    stub '' do
+    stub "" do
       capybara = load_capybara_selenium
-      capybara.app_host = 'https://code.angularjs.org'
+      capybara.app_host = "https://code.angularjs.org"
       capybara.visit("/#{self.class.release}/docs/api")
       capybara.execute_script("return document.querySelector('.side-navigation').innerHTML")
     end
 
-    version '1.7' do
-      self.release = '1.7.8'
+    version "1.7" do
+      self.release = "1.7.8"
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
 
-    version '1.6' do
-      self.release = '1.6.9'
+    version "1.6" do
+      self.release = "1.6.9"
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
 
-    version '1.5' do
-      self.release = '1.5.11'
+    version "1.5" do
+      self.release = "1.5.11"
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
 
-    version '1.4' do
-      self.release = '1.4.14'
+    version "1.4" do
+      self.release = "1.4.14"
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
 
-    version '1.3' do
-      self.release = '1.3.20'
+    version "1.3" do
+      self.release = "1.3.20"
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
 
-    version '1.2' do
-      self.release = '1.2.32'
+    version "1.2" do
+      self.release = "1.2.32"
       self.base_url = "https://code.angularjs.org/#{release}/docs/partials/"
     end
 
     def get_latest_version(opts)
-      get_npm_version('angular', opts)
+      get_npm_version("angular", opts)
     end
   end
 end

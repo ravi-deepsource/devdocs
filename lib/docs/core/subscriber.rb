@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'active_support/subscriber'
+require "active_support/subscriber"
 
 module Docs
   class Subscriber < ActiveSupport::Subscriber
@@ -23,7 +23,7 @@ module Docs
     end
 
     def format_path(path)
-      path.to_s.remove File.join(File.expand_path('.'), '')
+      path.to_s.remove File.join(File.expand_path("."), "")
     end
 
     def justify(str)
@@ -44,8 +44,8 @@ module Docs
 
       @terminal_width = if !tty?
         nil
-      elsif ENV['COLUMNS']
-        ENV['COLUMNS'].to_i
+      elsif ENV["COLUMNS"]
+        ENV["COLUMNS"].to_i
       else
         `stty size`.scan(/\d+/).last.to_i
       end

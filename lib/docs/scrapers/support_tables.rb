@@ -1,49 +1,49 @@
-require 'yajl/json_gem'
+require "yajl/json_gem"
 
 module Docs
   class SupportTables < Doc
     include Instrumentable
 
-    self.name = 'Support Tables'
-    self.slug = 'browser_support_tables'
-    self.type = 'support_tables'
+    self.name = "Support Tables"
+    self.slug = "browser_support_tables"
+    self.type = "support_tables"
 
     def build_pages
-      url = 'https://github.com/Fyrd/caniuse/raw/master/data.json'
-      instrument 'running.scraper', urls: [url]
+      url = "https://github.com/Fyrd/caniuse/raw/master/data.json"
+      instrument "running.scraper", urls: [url]
 
       response = Request.run(url)
-      instrument 'process_response.scraper', response: response
+      instrument "process_response.scraper", response: response
 
       data = JSON.parse(response.body)
-      instrument 'queued.scraper', urls: data['data'].keys
+      instrument "queued.scraper", urls: data["data"].keys
 
-      data['agents']['and_chr']['browser'] = 'Android Chrome'
-      data['agents']['and_ff']['browser'] = 'Android Firefox'
-      data['agents']['and_uc']['browser'] = 'Android UC Browser'
-      data['desktop_agents'] = data['agents'].select { |_, agent| agent['type'] == 'desktop' }
-      data['mobile_agents']  = data['agents'].select { |–, agent| agent['type'] == 'mobile' }
-      data['total_versions'] = data['agents']['firefox']['versions'].length
+      data["agents"]["and_chr"]["browser"] = "Android Chrome"
+      data["agents"]["and_ff"]["browser"] = "Android Firefox"
+      data["agents"]["and_uc"]["browser"] = "Android UC Browser"
+      data["desktop_agents"] = data["agents"].select { |_, agent| agent["type"] == "desktop" }
+      data["mobile_agents"] = data["agents"].select { |–, agent| agent["type"] == "mobile" }
+      data["total_versions"] = data["agents"]["firefox"]["versions"].length
 
       index_page = {
-        path: 'index',
-        store_path: 'index.html',
+        path: "index",
+        store_path: "index.html",
         output: ERB.new(INDEX_PAGE_ERB).result(binding),
-        entries: [Entry.new(nil, 'index', nil)]
+        entries: [Entry.new(nil, "index", nil)]
       }
 
       yield index_page
 
-      data['data'].each do |feature_id, feature|
+      data["data"].each do |feature_id, feature|
         url = "https://github.com/Fyrd/caniuse/raw/master/features-json/#{feature_id}.json"
 
         response = Request.run(url)
-        instrument 'process_response.scraper', response: response
+        instrument "process_response.scraper", response: response
 
         feature = JSON.parse(response.body)
 
-        name = feature['title']
-        type = feature['categories'].find { |category| name.include?(category) } || feature['categories'].first
+        name = feature["title"]
+        type = feature["categories"].find { |category| name.include?(category) } || feature["categories"].first
 
         page = {
           path: feature_id,
@@ -57,22 +57,22 @@ module Docs
     end
 
     def md_to_html(str)
-      str = CGI::escape_html(str.strip)
+      str = CGI.escape_html(str.strip)
       str.gsub! %r{`(.*?)`}, '<code>\1</code>'
-      str.gsub! %r{\n\s*\n}, '</p><p>'
-      str.gsub! "\n", '<br>'
+      str.gsub! %r{\n\s*\n}, "</p><p>"
+      str.gsub! "\n", "<br>"
       str.gsub! %r{\[(.+?)\]\((.+?)\)}, '<a href="\2">\1</a>'
       str
     end
 
     def support_to_css_class(support)
-      support.select { |s| s.length == 1 }.join(' ')
+      support.select { |s| s.length == 1 }.join(" ")
     end
 
     def support_to_note_indicators(support)
-      notes = support.select { |s| s.start_with?('#') }.map { |s| s[1..-1] }
-      notes << '*' if support.include?('x')
-      "<sup>(#{notes.join(',')})</sup>" if notes.present?
+      notes = support.select { |s| s.start_with?("#") }.map { |s| s[1..-1] }
+      notes << "*" if support.include?("x")
+      "<sup>(#{notes.join(",")})</sup>" if notes.present?
     end
 
     INDEX_PAGE_ERB = <<-HTML.strip_heredoc
@@ -180,7 +180,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      body = fetch('https://feeds.feedburner.com/WhenCanIUse?format=xml', opts)
+      body = fetch("https://feeds.feedburner.com/WhenCanIUse?format=xml", opts)
       timestamp = body.scan(/<updated>([^<]+)<\/updated>/)[0][0]
       DateTime.parse(timestamp).to_time.to_i
     end

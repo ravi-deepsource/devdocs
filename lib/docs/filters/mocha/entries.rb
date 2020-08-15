@@ -2,17 +2,17 @@ module Docs
   class Mocha
     class EntriesFilter < Docs::EntriesFilter
       ENTRIES = {
-        'asynchronous-code' => ['done()'],
-        'hooks' => ['before()', 'after()', 'beforeEach()', 'afterEach()', 'suiteSetup()', 'suiteTeardown()', 'setup()', 'teardown()'],
-        'exclusive-tests' => ['only()'],
-        'inclusive-tests' => ['skip()'],
-        'bdd' => ['describe()', 'context()', 'it()', 'specify()'],
-        'tdd' => ['suite()', 'test()'],
-        'exports' => ['exports'],
-        'qunit' => ['QUnit'],
-        'require' => ['require'],
-        'browser-specific-methods' => ['mocha.allowUncaught()', 'mocha.setup()', 'mocha.run()', 'mocha.globals()', 'mocha.checkLeaks()'],
-        'timeouts' => ['timeout()']
+        "asynchronous-code" => ["done()"],
+        "hooks" => ["before()", "after()", "beforeEach()", "afterEach()", "suiteSetup()", "suiteTeardown()", "setup()", "teardown()"],
+        "exclusive-tests" => ["only()"],
+        "inclusive-tests" => ["skip()"],
+        "bdd" => ["describe()", "context()", "it()", "specify()"],
+        "tdd" => ["suite()", "test()"],
+        "exports" => ["exports"],
+        "qunit" => ["QUnit"],
+        "require" => ["require"],
+        "browser-specific-methods" => ["mocha.allowUncaught()", "mocha.setup()", "mocha.run()", "mocha.globals()", "mocha.checkLeaks()"],
+        "timeouts" => ["timeout()"]
       }
 
       def additional_entries
@@ -24,15 +24,15 @@ module Docs
           end
         end
 
-        css('h2').each do |node|
+        css("h2").each do |node|
           name = node.content.strip
-          next if name.in?(%w(Examples Getting\ Started Installation More\ Information Testing\ Mocha))
-          name = 'mocha' if name == 'Usage'
-          entries << [name, node['id']]
+          next if name.in?(%w[Examples Getting\ Started Installation More\ Information Testing\ Mocha])
+          name = "mocha" if name == "Usage"
+          entries << [name, node["id"]]
         end
 
         entries.each do |entry|
-          entry[2] = entry[0] =~ /\A[a-z]/ ? 'API' : 'Manual'
+          entry[2] = /\A[a-z]/.match?(entry[0]) ? "API" : "Manual"
         end
 
         entries

@@ -15,13 +15,13 @@ module Docs
         hr_index = doc.children.find_index { |node| node.name == "hr" }
         doc.children[0..hr_index].each(&:remove)
 
-        css('.row', '.col-md-6', '.feature').each do |node|
+        css(".row", ".col-md-6", ".feature").each do |node|
           node.before(node.children).remove
         end
       end
 
       def other
-        css('h1, h2, h3, h4').each do |node|
+        css("h1, h2, h3, h4").each do |node|
           node.name = node.name.sub(/\d/) { |i| i.to_i + 1 }
         end
 
@@ -30,11 +30,11 @@ module Docs
 
         @doc = at_css("#wiki")
 
-        css('.contents', 'a.anchor', 'hr').remove
+        css(".contents", "a.anchor", "hr").remove
 
-        css('pre').each do |node|
+        css("pre").each do |node|
           node.content = node.content
-          node['data-language'] = 'javascript'
+          node["data-language"] = "javascript"
         end
       end
     end

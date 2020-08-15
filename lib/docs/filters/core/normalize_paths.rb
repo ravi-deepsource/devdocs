@@ -6,20 +6,20 @@ module Docs
       result[:path] = path
       result[:store_path] = store_path
 
-      css('a').each do |link|
-        next unless (href = link['href']) && relative_url_string?(href)
-        link['href'] = normalize_href(href)
+      css("a").each do |link|
+        next unless (href = link["href"]) && relative_url_string?(href)
+        link["href"] = normalize_href(href)
       end
 
       doc
     end
 
     def path
-      @path ||= root_page? ? 'index' : normalized_subpath
+      @path ||= root_page? ? "index" : normalized_subpath
     end
 
     def store_path
-      File.extname(path) != '.html' ? "#{path}.html" : path
+      File.extname(path) != ".html" ? "#{path}.html" : path
     end
 
     def normalized_subpath
@@ -42,11 +42,11 @@ module Docs
         path = clean_path(path)
       end
 
-      if path == '.'
-        'index'
-      elsif path.end_with? '/'
+      if path == "."
+        "index"
+      elsif path.end_with? "/"
         "#{path}index"
-      elsif path.end_with? '.html'
+      elsif path.end_with? ".html"
         path[0..-6]
       else
         path

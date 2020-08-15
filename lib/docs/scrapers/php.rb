@@ -4,12 +4,12 @@ module Docs
 
     include FixInternalUrlsBehavior
 
-    self.name = 'PHP'
-    self.type = 'php'
-    self.release = '7.2.9'
-    self.base_url = 'https://secure.php.net/manual/en/'
-    self.root_path = 'index.html'
-    self.initial_paths = %w(
+    self.name = "PHP"
+    self.type = "php"
+    self.release = "7.2.9"
+    self.base_url = "https://secure.php.net/manual/en/"
+    self.root_path = "index.html"
+    self.initial_paths = %w[
       funcref.html
       langref.html
       refs.database.html
@@ -18,18 +18,19 @@ module Docs
       reference.pcre.pattern.syntax.html
       reserved.exceptions.html
       reserved.interfaces.html
-      reserved.variables.html)
+      reserved.variables.html
+    ]
 
     self.links = {
-      home: 'https://secure.php.net/',
-      code: 'https://git.php.net/?p=php-src.git;a=summary'
+      home: "https://secure.php.net/",
+      code: "https://git.php.net/?p=php-src.git;a=summary"
     }
 
-    html_filters.push 'php/internal_urls', 'php/entries', 'php/clean_html', 'title'
-    text_filters.push 'php/fix_urls'
+    html_filters.push "php/internal_urls", "php/entries", "php/clean_html", "title"
+    text_filters.push "php/fix_urls"
 
     options[:title] = false
-    options[:root_title] = 'PHP: Hypertext Preprocessor'
+    options[:root_title] = "PHP: Hypertext Preprocessor"
     options[:skip_links] = ->(filter) { !filter.initial_page? }
 
     options[:only_patterns] = [
@@ -40,9 +41,10 @@ module Docs
       /\Aregexp\./,
       /\Areserved\.exceptions/,
       /\Areserved\.interfaces/,
-      /\Areserved\.variables/]
+      /\Areserved\.variables/
+    ]
 
-    BOOKS = %w(apache apc apcu array bc bzip2 calendar csprng classobj ctype curl
+    BOOKS = %w[apache apc apcu array bc bzip2 calendar csprng classobj ctype curl
       datetime dba dir dom ds eio errorfunc ev event exec exif fileinfo filesystem filter
       ftp funchand gearman geoip gettext gmagick gmp hash ibase iconv iisfunc image
       imagick imap info inotify intl json judy ldap libevent libxml lua mail mailparse
@@ -50,15 +52,16 @@ module Docs
       outcontrol password pcntl pcre pdo pgsql phar posix proctitle pthreads quickhash regex runkit
       reflection sca session sem session-pgsql shmop simplexml soap sockets solr sphinx spl
       spl-types sqlite3 sqlsrv ssh2 stats stream strings sync taint tidy tokenizer uodbc url
-      v8js var varnish weakref xml xmlreader xmlrpc xmlwriter xsl yaf yar yaml zip zlib)
+      v8js var varnish weakref xml xmlreader xmlrpc xmlwriter xsl yaf yar yaml zip zlib]
 
     options[:only] = BOOKS.map { |s| "book.#{s}.html" }
 
-    options[:skip] = %w(
+    options[:skip] = %w[
       control-structures.intro.html
       control-structures.alternative-syntax.html
       function.mssql-select-db.html
-      pthreads.modifiers.html)
+      pthreads.modifiers.html
+    ]
 
     options[:skip_patterns] = [/mysqlnd/, /xdevapi/i]
 
@@ -68,9 +71,9 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://secure.php.net/manual/en/doc.changelog.php', opts)
-      label = doc.at_css('tbody.gen-changelog > tr > td').content
-      label.split(',').last.strip
+      doc = fetch_doc("https://secure.php.net/manual/en/doc.changelog.php", opts)
+      label = doc.at_css("tbody.gen-changelog > tr > td").content
+      label.split(",").last.strip
     end
   end
 end

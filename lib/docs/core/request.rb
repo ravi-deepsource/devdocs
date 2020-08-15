@@ -4,7 +4,7 @@ module Docs
 
     DEFAULT_OPTIONS = {
       followlocation: true,
-      headers: { 'User-Agent' => 'DevDocs' }
+      headers: {"User-Agent" => "DevDocs"}
     }
 
     def self.run(*args, &block)
@@ -18,12 +18,12 @@ module Docs
     end
 
     def response=(value)
-      value.extend Response if value
+      value&.extend Response
       super
     end
 
     def run
-      instrument 'response.request', url: base_url do |payload|
+      instrument "response.request", url: base_url do |payload|
         response = super
         payload[:response] = response
         response
