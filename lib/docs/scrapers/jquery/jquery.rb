@@ -1,12 +1,12 @@
 module Docs
   class Jquery < UrlScraper
     self.abstract = true
-    self.type = 'jquery'
+    self.type = "jquery"
 
-    html_filters.push 'jquery/clean_html', 'title'
+    html_filters.push "jquery/clean_html", "title"
 
     options[:title] = false
-    options[:container] = '#content'
+    options[:container] = "#content"
     options[:trailing_slash] = false
     options[:skip_patterns] = [/deprecated/, /category\/version/]
 

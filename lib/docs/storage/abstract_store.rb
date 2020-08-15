@@ -1,4 +1,4 @@
-require 'pathname'
+require "pathname"
 
 module Docs
   class AbstractStore
@@ -82,7 +82,7 @@ module Docs
 
     def replace(path = nil, &block)
       if path
-        return open(path) { replace(&block) }
+        open(path) { replace(&block) }
       else
         lock { track_touched { yield.tap { delete_untouched } } }
       end
@@ -131,7 +131,7 @@ module Docs
       path = Pathname.new(path).cleanpath
       path = base + path unless path.absolute?
 
-      unless File.join(path, '').start_with? File.join(base, '')
+      unless File.join(path, "").start_with? File.join(base, "")
         raise InvalidPathError, "Tried accessing #{path} outside #{base}"
       end
 
@@ -147,19 +147,19 @@ module Docs
     end
 
     def create(path, value)
-      instrument 'create.store', path: path do
+      instrument "create.store", path: path do
         create_file(path, value)
       end
     end
 
     def update(path, value)
-      instrument 'update.store', path: path do
+      instrument "update.store", path: path do
         update_file(path, value)
       end
     end
 
     def destroy(path)
-      instrument 'destroy.store', path: path do
+      instrument "destroy.store", path: path do
         delete_file(path)
       end
     end
@@ -189,7 +189,7 @@ module Docs
     end
 
     def touched?(path)
-      dir = File.join(path, '')
+      dir = File.join(path, "")
 
       @touched.any? do |touched_path|
         touched_path == path || touched_path.start_with?(dir)

@@ -3,12 +3,12 @@ module Docs
     class EntriesFilter < Docs::EntriesFilter
       def get_name
         name = super
-        name.gsub!('Element.', '')
-        name.gsub!('Attribute.', '')
-        name.gsub!('Tutorial.', '')
-        name.gsub!('_', '')
+        name.gsub!("Element.", "")
+        name.gsub!("Attribute.", "")
+        name.gsub!("Tutorial.", "")
+        name.delete!("_")
 
-        if name.in?(%w(Element Attribute Content\ type))
+        if name.in?(%w[Element Attribute Content\ type])
           "#{name}s"
         else
           name
@@ -16,28 +16,28 @@ module Docs
       end
 
       def get_type
-        if slug.start_with?('Element')
-          'Elements'
-        elsif slug.start_with?('Attribute')
-          'Attributes'
-        elsif slug.start_with?('Tutorial')
-          'Tutorial'
-        elsif slug == 'Content_type'
-          'Content types'
+        if slug.start_with?("Element")
+          "Elements"
+        elsif slug.start_with?("Attribute")
+          "Attributes"
+        elsif slug.start_with?("Tutorial")
+          "Tutorial"
+        elsif slug == "Content_type"
+          "Content types"
         else
-          'Miscellaneous'
+          "Miscellaneous"
         end
       end
 
       def additional_entries
-        return [] unless slug == 'Content_type'
+        return [] unless slug == "Content_type"
         entries = []
 
-        css('h2[id]').each do |node|
+        css("h2[id]").each do |node|
           dl = node.next_element
-          next unless dl.name == 'dl'
-          name = dl.at_css('dt').content.remove(/[<>]/)
-          entries << [name, node['id']]
+          next unless dl.name == "dl"
+          name = dl.at_css("dt").content.remove(/[<>]/)
+          entries << [name, node["id"]]
         end
 
         entries

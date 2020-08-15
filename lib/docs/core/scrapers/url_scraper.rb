@@ -16,7 +16,7 @@ module Docs
     @@rate_limiter = nil
 
     self.params = {}
-    self.headers = { 'User-Agent' => 'DevDocs' }
+    self.headers = {"User-Agent" => "DevDocs"}
     self.force_gzip = false
 
     private
@@ -39,8 +39,8 @@ module Docs
     end
 
     def request_options
-      options = { params: self.class.params, headers: self.class.headers }
-      options[:accept_encoding] = 'gzip' if self.class.force_gzip
+      options = {params: self.class.params, headers: self.class.headers}
+      options[:accept_encoding] = "gzip" if self.class.force_gzip
       options
     end
 
@@ -63,8 +63,8 @@ module Docs
     end
 
     def load_capybara_selenium
-      require 'capybara/dsl'
-      require 'selenium/webdriver'
+      require "capybara/dsl"
+      require "selenium/webdriver"
       Capybara.register_driver :chrome do |app|
         options = Selenium::WebDriver::Chrome::Options.new(args: %w[headless disable-gpu])
         Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
@@ -104,11 +104,11 @@ module Docs
       end
 
       def process_response(response)
-        original_scheme = self.base_url.scheme
-        original_host = self.base_url.host
-        original_path = self.base_url.path
+        original_scheme = base_url.scheme
+        original_host = base_url.host
+        original_path = base_url.path
 
-        effective_base_url = self.base_urls.find { |base_url| base_url.contains?(response.effective_url) }
+        effective_base_url = base_urls.find { |base_url| base_url.contains?(response.effective_url) }
 
         self.base_url.scheme = effective_base_url.scheme
         self.base_url.host = effective_base_url.host
@@ -138,9 +138,9 @@ module Docs
         end
 
         def store_pages(store)
-          instrument 'info.doc', msg: 'Fetching redirections...'
+          instrument "info.doc", msg: "Fetching redirections..."
           with_redirections do
-            instrument 'info.doc', msg: 'Continuing...'
+            instrument "info.doc", msg: "Continuing..."
             super
           end
         end
@@ -157,7 +157,7 @@ module Docs
 
       def fetch_redirections
         result = {}
-        with_filters 'apply_base_url', 'container', 'normalize_urls', 'internal_urls' do
+        with_filters "apply_base_url", "container", "normalize_urls", "internal_urls" do
           build_pages do |page|
             next if page[:response_effective_path] == page[:response_path]
             result[page[:response_path].downcase] = page[:response_effective_path]

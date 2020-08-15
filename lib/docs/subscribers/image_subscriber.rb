@@ -2,7 +2,7 @@
 
 module Docs
   class ImageSubscriber < Subscriber
-    self.namespace = 'image'
+    self.namespace = "image"
 
     def broken(event)
       log "Skipped broken image (#{event.payload[:code]}): #{event.payload[:url]}"

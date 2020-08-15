@@ -1,20 +1,21 @@
 module Docs
   class Perl < FileScraper
-    self.name = 'Perl'
-    self.type = 'perl'
-    self.root_path = 'index.html'
+    self.name = "Perl"
+    self.type = "perl"
+    self.root_path = "index.html"
     self.links = {
-      home: 'https://www.perl.org/'
+      home: "https://www.perl.org/"
     }
 
-    html_filters.push 'perl/entries', 'perl/clean_html'
+    html_filters.push "perl/entries", "perl/clean_html"
 
-    options[:skip] = %w(
+    options[:skip] = %w[
       preferences.html
       perlartistic.html
       perlgpl.html
       perlhist.html
-      perltodo.html )
+      perltodo.html
+    ]
 
     options[:skip_patterns] = [/\.pdf/, /delta\.html/]
 
@@ -24,29 +25,29 @@ module Docs
       The Perl logo is a trademark of the Perl Foundation.
     HTML
 
-    version '5.26' do
-      self.release = '5.26.0'
-      self.base_url = "https://perldoc.perl.org/#{self.release}/"
+    version "5.26" do
+      self.release = "5.26.0"
+      self.base_url = "https://perldoc.perl.org/#{release}/"
     end
 
-    version '5.24' do
-      self.release = '5.24.0'
-      self.base_url = "https://perldoc.perl.org/#{self.release}/"
+    version "5.24" do
+      self.release = "5.24.0"
+      self.base_url = "https://perldoc.perl.org/#{release}/"
     end
 
-    version '5.22' do
-      self.release = '5.22.0'
-      self.base_url = "https://perldoc.perl.org/#{self.release}/"
+    version "5.22" do
+      self.release = "5.22.0"
+      self.base_url = "https://perldoc.perl.org/#{release}/"
     end
 
-    version '5.20' do
-      self.release = '5.20.2'
-      self.base_url = "https://perldoc.perl.org/#{self.release}/"
+    version "5.20" do
+      self.release = "5.20.2"
+      self.base_url = "https://perldoc.perl.org/#{release}/"
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://perldoc.perl.org/', opts)
-      header = doc.at_css('h2.h1').content
+      doc = fetch_doc("https://perldoc.perl.org/", opts)
+      header = doc.at_css("h2.h1").content
       header.scan(/Perl ([0-9.]+)/)[0][0]
     end
   end

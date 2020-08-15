@@ -2,20 +2,20 @@ module Docs
   class Scala
     class EntriesFilter < Docs::EntriesFilter
       REPLACEMENTS = {
-        '$eq' => '=',
-        '$colon' => ':',
-        '$less' => '<',
+        "$eq" => "=",
+        "$colon" => ":",
+        "$less" => "<"
       }
 
       def get_name
         if is_package?
-          symbol = at_css('#definition h1')
-          symbol ? symbol.text.gsub(/\W+/, '') : "package"
+          symbol = at_css("#definition h1")
+          symbol ? symbol.text.gsub(/\W+/, "") : "package"
         else
-          name = slug.split('/').last
+          name = slug.split("/").last
 
           # Some objects have inner objects, show ParentObject$.ChildObject$ instead of ParentObject$$ChildObject$
-          name = name.gsub('$$', '$.')
+          name = name.gsub("$$", "$.")
 
           REPLACEMENTS.each do |key, value|
             name = name.gsub(key, value)
@@ -43,20 +43,20 @@ module Docs
       def additional_entries
         entries = []
 
-        full_name = "#{type}.#{name}".remove('$')
+        full_name = "#{type}.#{name}".remove("$")
         css(".members li[name^=\"#{full_name}\"]").each do |node|
           # Ignore packages
-          kind = node.at_css('.modifier_kind > .kind')
-          next if !kind.nil? && kind.content == 'package'
+          kind = node.at_css(".modifier_kind > .kind")
+          next if !kind.nil? && kind.content == "package"
 
           # Ignore deprecated members
-          next unless node.at_css('.symbol > .name.deprecated').nil?
+          next unless node.at_css(".symbol > .name.deprecated").nil?
 
-          id = node['name'].rpartition('#').last
-          member_name = node.at_css('.name')
+          id = node["name"].rpartition("#").last
+          member_name = node.at_css(".name")
 
           # Ignore members only existing of hashtags, we can't link to that
-          next if member_name.nil? || member_name.content.strip.remove('#').blank?
+          next if member_name.nil? || member_name.content.strip.remove("#").blank?
 
           member = "#{name}.#{member_name.content}()"
           entries << [member, id]
@@ -75,28 +75,28 @@ module Docs
       # include the companion object.
       def package_name
         name = package_drop_last(slug_parts)
-        name.empty? ? '_root_' : name
+        name.empty? ? "_root_" : name
       end
 
       def parent_package
-        parent = package_drop_last(package_name.split('.'))
-        parent.empty? ? '_root_' : parent
+        parent = package_drop_last(package_name.split("."))
+        parent.empty? ? "_root_" : parent
       end
 
       def package_drop_last(parts)
-        parts[0...-1].join('.')
+        parts[0...-1].join(".")
       end
 
       def slug_parts
-        slug.split('/')
+        slug.split("/")
       end
 
       def owner
-        at_css('#owner')
+        at_css("#owner")
       end
 
       def is_package?
-        slug.ends_with?('index') || slug.ends_with?('package')
+        slug.ends_with?("index") || slug.ends_with?("package")
       end
     end
   end

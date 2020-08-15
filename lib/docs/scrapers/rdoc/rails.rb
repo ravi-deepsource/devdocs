@@ -10,22 +10,22 @@ module Docs
 
     include FixInternalUrlsBehavior
 
-    self.name = 'Ruby on Rails'
-    self.slug = 'rails'
-    self.initial_paths = %w(guides/index.html)
+    self.name = "Ruby on Rails"
+    self.slug = "rails"
+    self.initial_paths = %w[guides/index.html]
     self.links = {
-      home: 'http://rubyonrails.org/',
-      code: 'https://github.com/rails/rails'
+      home: "http://rubyonrails.org/",
+      code: "https://github.com/rails/rails"
     }
 
-    html_filters.replace 'rdoc/entries', 'rails/entries'
-    html_filters.push 'rails/clean_html_guides'
+    html_filters.replace "rdoc/entries", "rails/entries"
+    html_filters.push "rails/clean_html_guides"
 
-    options[:skip_rdoc_filters?] = ->(filter) { filter.slug.start_with?('guides/') }
+    options[:skip_rdoc_filters?] = ->(filter) { filter.slug.start_with?("guides/") }
 
-    options[:root_title] = 'Ruby on Rails'
+    options[:root_title] = "Ruby on Rails"
 
-    options[:skip] += %w(
+    options[:skip] += %w[
       guides/credits.html
       guides/ruby_on_rails_guides_guidelines.html
       guides/contributing_to_ruby_on_rails.html
@@ -43,16 +43,18 @@ module Docs
       ActionView/TestCase/Behavior/RenderedViewsCollection.html
       ActiveRecord/Tasks/DatabaseTasks.html
       ActiveSupport/Dependencies/WatchStack.html
-      ActiveSupport/Notifications/Fanout.html)
+      ActiveSupport/Notifications/Fanout.html
+    ]
 
     # False positives found by docs:generate
-    options[:skip].concat %w(
+    options[:skip].concat %w[
       ActionDispatch/www.example.com
       ActionDispatch/Http/www.rubyonrails.org
       ActionDispatch/Http/www.rubyonrails.co.uk
       'TZ'
       active_record_migrations.html
-      association_basics.html)
+      association_basics.html
+    ]
 
     options[:skip_patterns] += [
       /release_notes/,
@@ -67,10 +69,11 @@ module Docs
       /\ARails\/API/,
       /\ARails\/AppBuilder/,
       /\ARails\/PluginBuilder/,
-      /\ARails\/Generators\/Testing/]
+      /\ARails\/Generators\/Testing/
+    ]
 
     options[:attribution] = ->(filter) do
-      if filter.slug.start_with?('guides')
+      if filter.slug.start_with?("guides")
         <<-HTML
           &copy; 2004&ndash;2019 David Heinemeier Hansson<br>
           Licensed under the Creative Commons Attribution-ShareAlike 4.0 International License.
@@ -83,32 +86,32 @@ module Docs
       end
     end
 
-    version '6.0' do
-      self.release = '6.0.0'
+    version "6.0" do
+      self.release = "6.0.0"
     end
 
-    version '5.2' do
-      self.release = '5.2.2'
+    version "5.2" do
+      self.release = "5.2.2"
     end
 
-    version '5.1' do
-      self.release = '5.1.6'
+    version "5.1" do
+      self.release = "5.1.6"
     end
 
-    version '5.0' do
-      self.release = '5.0.7'
+    version "5.0" do
+      self.release = "5.0.7"
     end
 
-    version '4.2' do
-      self.release = '4.2.11'
+    version "4.2" do
+      self.release = "4.2.11"
     end
 
-    version '4.1' do
-      self.release = '4.1.16'
+    version "4.1" do
+      self.release = "4.1.16"
     end
 
     def get_latest_version(opts)
-      get_latest_github_release('rails', 'rails', opts)
+      get_latest_github_release("rails", "rails", opts)
     end
   end
 end
