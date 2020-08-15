@@ -3,10 +3,10 @@
 module Docs
   class ParseCfEmailFilter < Filter
     def call
-      css('.__cf_email__').each do |node|
-        str = node['data-cfemail']
+      css(".__cf_email__").each do |node|
+        str = node["data-cfemail"]
         mask = "0x#{str[0..1]}".hex | 0
-        result = ''
+        result = ""
 
         str.chars.drop(2).each_slice(2) do |slice|
           result += "%" + "0#{("0x#{slice.join}".hex ^ mask).to_s(16)}"[-2..-1]

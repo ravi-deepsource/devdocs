@@ -1,12 +1,12 @@
 module Docs
   class Markdown < UrlScraper
-    self.name = 'Markdown'
-    self.type = 'simple'
-    self.base_url = 'http://daringfireball.net/projects/markdown/syntax'
+    self.name = "Markdown"
+    self.type = "simple"
+    self.base_url = "http://daringfireball.net/projects/markdown/syntax"
 
-    html_filters.push 'markdown/clean_html', 'markdown/entries'
+    html_filters.push "markdown/clean_html", "markdown/entries"
 
-    options[:container] = '.article'
+    options[:container] = ".article"
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML
@@ -15,7 +15,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      '1.0.0'
+      "1.0.0"
     end
   end
 end

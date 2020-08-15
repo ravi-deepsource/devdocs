@@ -1,29 +1,29 @@
-require 'bundler/setup'
+require "bundler/setup"
 Bundler.require :default, :docs
 
-require 'active_support'
-require 'active_support/core_ext'
+require "active_support"
+require "active_support/core_ext"
 I18n.enforce_available_locales = true
 
 module Docs
-  require 'docs/core/autoload_helper'
+  require "docs/core/autoload_helper"
   extend AutoloadHelper
 
   mattr_reader :root_path
-  @@root_path = File.expand_path '..', __FILE__
+  @@root_path = File.expand_path "..", __FILE__
 
-  autoload :URL, 'docs/core/url'
-  autoload_all 'docs/core'
-  autoload_all 'docs/filters/core', 'filter'
-  autoload_all 'docs/scrapers'
-  autoload_all 'docs/storage'
-  autoload_all 'docs/subscribers'
+  autoload :URL, "docs/core/url"
+  autoload_all "docs/core"
+  autoload_all "docs/filters/core", "filter"
+  autoload_all "docs/scrapers"
+  autoload_all "docs/storage"
+  autoload_all "docs/subscribers"
 
   mattr_accessor :store_class
   self.store_class = FileStore
 
   mattr_accessor :store_path
-  self.store_path = File.expand_path '../public/docs', @@root_path
+  self.store_path = File.expand_path "../public/docs", @@root_path
 
   mattr_accessor :rescue_errors
   self.rescue_errors = false
@@ -32,11 +32,11 @@ module Docs
   class SetupError < StandardError; end
 
   def self.all
-    Dir["#{root_path}/docs/scrapers/**/*.rb"].
-      map { |file| File.basename(file, '.rb') }.
-      map { |name| const_get(name.camelize) }.
-      sort { |a, b| a.name.casecmp(b.name) }.
-      reject(&:abstract)
+    Dir["#{root_path}/docs/scrapers/**/*.rb"]
+      .map { |file| File.basename(file, ".rb") }
+      .map { |name| const_get(name.camelize) }
+      .sort { |a, b| a.name.casecmp(b.name) }
+      .reject(&:abstract)
   end
 
   def self.all_versions
@@ -44,15 +44,15 @@ module Docs
   end
 
   def self.defaults
-    %w(css dom dom_events html http javascript).map(&method(:find))
+    %w[css dom dom_events html http javascript].map(&method(:find))
   end
 
   def self.installed
-    Dir["#{store_path}/**/index.json"].
-      map { |file| file[%r{/([^/]*)/index\.json\z}, 1] }.
-      sort!.
-      map { |path| all_versions.find { |doc| doc.path == path } }.
-      compact
+    Dir["#{store_path}/**/index.json"]
+      .map { |file| file[%r{/([^/]*)/index\.json\z}, 1] }
+      .sort!
+      .map { |path| all_versions.find { |doc| doc.path == path } }
+      .compact
   end
 
   def self.find(name, version = nil)

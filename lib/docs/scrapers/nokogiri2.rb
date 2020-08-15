@@ -5,13 +5,13 @@ module Docs
     #   2. Run "bundle install && bundle exec rake docs" (in the Nokogiri directory)
     #   4. Copy the "doc" directory to "docs/nokogiri"
 
-    self.name = 'Nokogiri'
-    self.slug = 'nokogiri'
-    self.release = '1.10.4'
+    self.name = "Nokogiri"
+    self.slug = "nokogiri"
+    self.release = "1.10.4"
 
-    html_filters.replace 'rdoc/entries', 'nokogiri2/entries'
+    html_filters.replace "rdoc/entries", "nokogiri2/entries"
 
-    options[:root_title] = 'Nokogiri'
+    options[:root_title] = "Nokogiri"
     options[:only_patterns] = [/\ANokogiri/, /\AXSD/]
 
     options[:attribution] = <<-HTML
@@ -21,7 +21,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      get_latest_github_release('sparklemotion', 'nokogiri', opts)
+      get_latest_github_release("sparklemotion", "nokogiri", opts)
     end
   end
 end

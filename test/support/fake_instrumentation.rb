@@ -1,6 +1,6 @@
 module FakeInstrumentation
   def instrument(event, payload = nil)
-    (@instrumentations ||= []) << { event: event, payload: payload }
+    (@instrumentations ||= []) << {event: event, payload: payload}
     yield payload if block_given?
   end
 
