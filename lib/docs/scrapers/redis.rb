@@ -1,18 +1,18 @@
 module Docs
   class Redis < UrlScraper
-    self.type = 'redis'
-    self.release = '5.0.0'
-    self.base_url = 'https://redis.io/commands'
+    self.type = "redis"
+    self.release = "5.0.0"
+    self.base_url = "https://redis.io/commands"
     self.links = {
-      home: 'https://redis.io/',
-      code: 'https://github.com/antirez/redis'
+      home: "https://redis.io/",
+      code: "https://github.com/antirez/redis"
     }
 
-    html_filters.push 'redis/entries', 'redis/clean_html', 'title'
+    html_filters.push "redis/entries", "redis/clean_html", "title"
 
-    options[:container] = ->(filter) { filter.root_page? ? '#commands' : '.text' }
+    options[:container] = ->(filter) { filter.root_page? ? "#commands" : ".text" }
     options[:title] = false
-    options[:root_title] = 'Redis'
+    options[:root_title] = "Redis"
     options[:follow_links] = ->(filter) { filter.root_page? }
 
     options[:attribution] = <<-HTML
@@ -21,7 +21,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      body = fetch('http://download.redis.io/redis-stable/00-RELEASENOTES', opts)
+      body = fetch("http://download.redis.io/redis-stable/00-RELEASENOTES", opts)
       body = body.lines[1..-1].join
       body.scan(/Redis ([0-9.]+)/)[0][0]
     end

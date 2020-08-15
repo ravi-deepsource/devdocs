@@ -1,7 +1,7 @@
 module Docs
   class Mariadb
     class EraseInvalidPagesFilter < Filter
-      @@seen_urls = Hash.new
+      @@seen_urls = {}
 
       def call
         # The MariaDB documentation uses urls like mariadb.com/kb/en/*
@@ -11,17 +11,17 @@ module Docs
         # The entries filter will make sure that no entry is saved for this page
 
         if at_css('a.crumb[href="https://mariadb.com/kb/en/documentation/"]').nil?
-          doc.inner_html = ''
+          doc.inner_html = ""
         end
 
-        current_page = at_css('a.crumb.node_link')
+        current_page = at_css("a.crumb.node_link")
         unless current_page.nil?
-          url = current_page['href']
+          url = current_page["href"]
 
           # Some links lead to the same page
           # Only parse the page one time
           if @@seen_urls.has_key?(url)
-            doc.inner_html = ''
+            doc.inner_html = ""
           end
 
           @@seen_urls[url] = true

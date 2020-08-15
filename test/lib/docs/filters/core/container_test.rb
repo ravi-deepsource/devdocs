@@ -1,21 +1,21 @@
-require 'test_helper'
-require 'docs'
+require "test_helper"
+require "docs"
 
 class ContainerFilterTest < MiniTest::Spec
   include FilterTestHelper
   self.filter_class = Docs::ContainerFilter
-  self.filter_type = 'html'
+  self.filter_type = "html"
 
   before do
-    @body = '<div>Test</div>'
+    @body = "<div>Test</div>"
   end
 
   context "when context[:container] is a CSS selector" do
-    before { context[:container] = '.main' }
+    before { context[:container] = ".main" }
 
     it "returns the element when it exists" do
       @body = '<div><div class="main">Main</div></div><div></div>'
-      assert_equal 'Main', filter_output.inner_html
+      assert_equal "Main", filter_output.inner_html
     end
 
     it "raises an error when the element doesn't exist" do
@@ -33,11 +33,11 @@ class ContainerFilterTest < MiniTest::Spec
     end
 
     context "and the block returns a CSS selector" do
-      before { context[:container] = ->(_) { '.main' } }
+      before { context[:container] = ->(_) { ".main" } }
 
       it "returns the element when it exists" do
         @body = '<div><div class="main">Main</div></div>'
-        assert_equal 'Main', filter_output.inner_html
+        assert_equal "Main", filter_output.inner_html
       end
 
       it "raises an error when the element doesn't exist" do
@@ -65,8 +65,8 @@ class ContainerFilterTest < MiniTest::Spec
 
     context "and the document is an HTML document" do
       it "returns the <body>" do
-        @body = '<html><meta charset=utf-8><title></title><div>Test</div></html>'
-        assert_equal '<div>Test</div>', filter_output.inner_html
+        @body = "<html><meta charset=utf-8><title></title><div>Test</div></html>"
+        assert_equal "<div>Test</div>", filter_output.inner_html
       end
     end
   end

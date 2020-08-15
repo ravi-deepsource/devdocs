@@ -1,18 +1,18 @@
 module Docs
   class Relay < UrlScraper
-    self.type = 'simple'
-    self.release = '1.4.1'
-    self.base_url = 'https://facebook.github.io/relay/docs/'
-    self.root_path = 'getting-started.html'
+    self.type = "simple"
+    self.release = "1.4.1"
+    self.base_url = "https://facebook.github.io/relay/docs/"
+    self.root_path = "getting-started.html"
     self.links = {
-      home: 'https://facebook.github.io/relay/',
-      code: 'https://github.com/facebook/relay'
+      home: "https://facebook.github.io/relay/",
+      code: "https://github.com/facebook/relay"
     }
 
-    html_filters.push 'relay/entries', 'relay/clean_html'
+    html_filters.push "relay/entries", "relay/clean_html"
 
-    options[:container] = '.documentationContent'
-    options[:skip] = %w(videos.html graphql-further-reading.html)
+    options[:container] = ".documentationContent"
+    options[:skip] = %w[videos.html graphql-further-reading.html]
 
     options[:attribution] = <<-HTML
       &copy; 2013&ndash;present Facebook Inc.<br>
@@ -20,8 +20,8 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('http://facebook.github.io/relay/en/', opts)
-      doc.at_css('header > a > h3').content[1..-1]
+      doc = fetch_doc("http://facebook.github.io/relay/en/", opts)
+      doc.at_css("header > a > h3").content[1..-1]
     end
   end
 end

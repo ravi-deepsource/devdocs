@@ -1,15 +1,15 @@
 module Docs
   class Gnu < FileScraper
-    self.type = 'simple'
-    self.root_path = 'index.html'
-    self.abstract = 'true'
+    self.type = "simple"
+    self.root_path = "index.html"
+    self.abstract = "true"
 
-    html_filters.push 'gnu/clean_html', 'gnu/entries'
+    html_filters.push "gnu/clean_html", "gnu/entries"
 
-    options[:skip] = %w(
+    options[:skip] = %w[
       GNU-Project.html
       Service.html
-    )
+    ]
 
     options[:skip_patterns] = [
       /Funding/,

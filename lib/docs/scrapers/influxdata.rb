@@ -1,19 +1,19 @@
 module Docs
   class Influxdata < UrlScraper
-    self.name = 'InfluxData'
-    self.type = 'simple'
-    self.release = '1.3'
-    self.base_url = 'https://docs.influxdata.com/'
+    self.name = "InfluxData"
+    self.type = "simple"
+    self.release = "1.3"
+    self.base_url = "https://docs.influxdata.com/"
     self.links = {
-      home: 'https://www.influxdata.com/',
-      code: 'https://github.com/influxdata/influxdb'
+      home: "https://www.influxdata.com/",
+      code: "https://github.com/influxdata/influxdb"
     }
 
-    html_filters.push 'influxdata/entries', 'influxdata/clean_html', 'title'
+    html_filters.push "influxdata/entries", "influxdata/clean_html", "title"
 
     options[:trailing_slash] = true
 
-    options[:root_title] = 'InfluxData Documentation'
+    options[:root_title] = "InfluxData Documentation"
     options[:title] = false
 
     options[:only_patterns] = [/(telegraf|influxdb|chronograf|kapacitor)\/v#{release}/]
@@ -28,17 +28,17 @@ module Docs
     ]
 
     options[:replace_paths] = {
-      "telegraf/v#{release}/introduction/getting-started-telegraf/"  => "telegraf/v#{release}/introduction/getting_started/",
-      "influxdb/v#{release}/write_protocols/line/"                   => "influxdb/v#{release}/write_protocols/line_protocol_tutorial/",
-      "influxdb/v#{release}/write_protocols/graphite/"               => "influxdb/v#{release}/tools/graphite/",
-      "influxdb/v#{release}/clients/api/"                            => "influxdb/v#{release}/tools/api_client_libraries/",
-      "influxdb/v#{release}/concepts/010_vs_011/"                    => "influxdb/v#{release}/administration/differences/",
-      "influxdb/v#{release}/write_protocols/write_syntax/"           => "influxdb/v#{release}/write_protocols/line_protocol_reference/",
-      "influxdb/v#{release}/write_protocols/udp/"                    => "influxdb/v#{release}/tools/udp/"
+      "telegraf/v#{release}/introduction/getting-started-telegraf/" => "telegraf/v#{release}/introduction/getting_started/",
+      "influxdb/v#{release}/write_protocols/line/" => "influxdb/v#{release}/write_protocols/line_protocol_tutorial/",
+      "influxdb/v#{release}/write_protocols/graphite/" => "influxdb/v#{release}/tools/graphite/",
+      "influxdb/v#{release}/clients/api/" => "influxdb/v#{release}/tools/api_client_libraries/",
+      "influxdb/v#{release}/concepts/010_vs_011/" => "influxdb/v#{release}/administration/differences/",
+      "influxdb/v#{release}/write_protocols/write_syntax/" => "influxdb/v#{release}/write_protocols/line_protocol_reference/",
+      "influxdb/v#{release}/write_protocols/udp/" => "influxdb/v#{release}/tools/udp/"
     }
 
     options[:fix_urls] = ->(url) do
-      url.sub! %r{/influxdb/v([\d\.]+)/.+/influxdb/v[\d\.]+/}, '/influxdb/v\1/'
+      url.sub! %r{/influxdb/v([\d.]+)/.+/influxdb/v[\d.]+/}, '/influxdb/v\1/'
       url
     end
 
@@ -48,8 +48,8 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://docs.influxdata.com/influxdb/', opts)
-      label = doc.at_css('.navbar--current-product').content.strip
+      doc = fetch_doc("https://docs.influxdata.com/influxdb/", opts)
+      label = doc.at_css(".navbar--current-product").content.strip
       label.scan(/([0-9.]+)/)[0][0]
     end
   end

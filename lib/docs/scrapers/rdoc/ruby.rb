@@ -8,16 +8,16 @@ module Docs
     include FixInternalUrlsBehavior
 
     self.links = {
-      home: 'https://www.ruby-lang.org/',
-      code: 'https://github.com/ruby/ruby'
+      home: "https://www.ruby-lang.org/",
+      code: "https://github.com/ruby/ruby"
     }
 
-    html_filters.replace 'rdoc/entries', 'ruby/entries'
+    html_filters.replace "rdoc/entries", "ruby/entries"
 
-    options[:root_title] = 'Ruby Programming Language'
-    options[:title] = ->(filter) { filter.slug == 'globals_rdoc' ? 'Globals' : false }
+    options[:root_title] = "Ruby Programming Language"
+    options[:title] = ->(filter) { filter.slug == "globals_rdoc" ? "Globals" : false }
 
-    options[:skip] += %w(
+    options[:skip] += %w[
       contributing_rdoc.html
       contributors_rdoc.html
       dtrace_probes_rdoc.html
@@ -34,7 +34,8 @@ module Docs
       NKF.html
       OLEProperty.html
       OptParse.html
-      UnicodeNormalize.html)
+      UnicodeNormalize.html
+    ]
 
     options[:skip_patterns] += [
       /\Alib\//,
@@ -60,7 +61,8 @@ module Docs
       /\AWEBrick/,
       /win32/i,
       /\AXML/,
-      /\AXMP/]
+      /\AXMP/
+    ]
 
     options[:attribution] = <<-HTML
       Ruby Core &copy; 1993&ndash;2017 Yukihiro Matsumoto<br>
@@ -69,32 +71,32 @@ module Docs
       Licensed under their own licenses.
     HTML
 
-    version '2.6' do
-      self.release = '2.6.3'
+    version "2.6" do
+      self.release = "2.6.3"
     end
 
-    version '2.5' do
-      self.release = '2.5.3'
+    version "2.5" do
+      self.release = "2.5.3"
     end
 
-    version '2.4' do
-      self.release = '2.4.5'
+    version "2.4" do
+      self.release = "2.4.5"
     end
 
-    version '2.3' do
-      self.release = '2.3.8'
+    version "2.3" do
+      self.release = "2.3.8"
     end
 
-    version '2.2' do
-      self.release = '2.2.10'
+    version "2.2" do
+      self.release = "2.2.10"
     end
 
     def get_latest_version(opts)
-      tags = get_github_tags('ruby', 'ruby', opts)
+      tags = get_github_tags("ruby", "ruby", opts)
       tags.each do |tag|
-        version = tag['name'].gsub(/_/, '.')[1..-1]
+        version = tag["name"].tr("_", ".")[1..-1]
 
-        if !/^([0-9.]+)$/.match(version).nil? && version.count('.') == 2
+        if !/^([0-9.]+)$/.match(version).nil? && version.count(".") == 2
           return version
         end
       end

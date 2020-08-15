@@ -1,8 +1,8 @@
 module Docs
   class Github < UrlScraper
     self.abstract = true
-    self.type = 'github'
+    self.type = "github"
 
-    html_filters.push 'github/clean_html'
+    html_filters.push "github/clean_html"
   end
 end

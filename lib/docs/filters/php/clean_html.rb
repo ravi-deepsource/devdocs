@@ -7,19 +7,19 @@ module Docs
       end
 
       def root
-        doc.inner_html = ' '
+        doc.inner_html = " "
       end
 
       def other
-        css('.manualnavbar:first-child', '.manualnavbar .up', '.manualnavbar .home', 'hr').remove
+        css(".manualnavbar:first-child", ".manualnavbar .up", ".manualnavbar .home", "hr").remove
 
-        nav = at_css('.manualnavbar').remove
+        nav = at_css(".manualnavbar").remove
 
-        if prev_link = nav.at_css('.prev a')
+        if prev_link = nav.at_css(".prev a")
           prev_link.content = "← #{prev_link.content}"
         end
 
-        if next_link = nav.at_css('.next a')
+        if next_link = nav.at_css(".next a")
           next_link.content = "#{next_link.content} →"
         end
 
@@ -32,22 +32,22 @@ module Docs
 
         # Remove code highlighting
         br = /<br\s?\/?>/i
-        css('.phpcode', 'div.methodsynopsis').each do |node|
-          node.name = 'pre'
+        css(".phpcode", "div.methodsynopsis").each do |node|
+          node.name = "pre"
           node.inner_html = node.inner_html.gsub(br, "\n")
           node.content = node.content.strip
-          node['data-language'] = 'php'
+          node["data-language"] = "php"
         end
 
-        css('> h2:first-child.title').each do |node|
-          node.name = 'h1'
+        css("> h2:first-child.title").each do |node|
+          node.name = "h1"
         end
 
-        css('div.partintro', 'div.section', 'h1 a').each do |node|
+        css("div.partintro", "div.section", "h1 a").each do |node|
           node.before(node.children).remove
         end
 
-        css('.title + .verinfo + .title').each do |node|
+        css(".title + .verinfo + .title").each do |node|
           node.after(node.previous_element)
         end
       end

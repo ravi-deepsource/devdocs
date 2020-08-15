@@ -1,9 +1,9 @@
-require 'test_helper'
-require 'docs'
+require "test_helper"
+require "docs"
 
 class DocsUrlScraperTest < MiniTest::Spec
   class Scraper < Docs::UrlScraper
-    self.base_url = 'http://example.com'
+    self.base_url = "http://example.com"
     self.html_filters = Docs::FilterStack.new
     self.text_filters = Docs::FilterStack.new
   end
@@ -14,7 +14,7 @@ class DocsUrlScraperTest < MiniTest::Spec
 
   describe ".inherited" do
     it "duplicates .params" do
-      stub(Scraper).params { { test: [] } }
+      stub(Scraper).params { {test: []} }
       subclass = Class.new Scraper
       assert_equal Scraper.params, subclass.params
       refute_same Scraper.params, subclass.params
@@ -24,42 +24,42 @@ class DocsUrlScraperTest < MiniTest::Spec
 
   describe "#request_one" do
     let :result do
-      scraper.send :request_one, 'url'
+      scraper.send :request_one, "url"
     end
 
     it "runs a Request with the given url" do
-      mock(Docs::Request).run 'url', anything
+      mock(Docs::Request).run "url", anything
       result
     end
 
     it "runs a Request with the .params" do
-      stub(Scraper).params { { test: true } }
+      stub(Scraper).params { {test: true} }
       mock(Docs::Request).run anything, satisfy { |options| options[:params][:test] }
       result
     end
 
     it "returns the result" do
-      stub(Docs::Request).run { 'response' }
-      assert_equal 'response', result
+      stub(Docs::Request).run { "response" }
+      assert_equal "response", result
     end
   end
 
   describe "#request_all" do
     let :block do
-      Proc.new {}
+      proc {}
     end
 
     let :result do
-      scraper.send :request_all, 'urls', &block
+      scraper.send :request_all, "urls", &block
     end
 
     it "runs a Requester with the given urls" do
-      mock(Docs::Requester).run 'urls', anything
+      mock(Docs::Requester).run "urls", anything
       result
     end
 
     it "runs a Requester with .headers as :request_options" do
-      stub(Scraper).headers { { testheader: true } }
+      stub(Scraper).headers { {testheader: true} }
       mock(Docs::Requester).run anything, satisfy { |options| options[:request_options][:headers][:testheader] }
       result
     end
@@ -70,7 +70,7 @@ class DocsUrlScraperTest < MiniTest::Spec
     end
 
     it "runs a Requester with .params as :request_options" do
-      stub(Scraper).params { { test: true } }
+      stub(Scraper).params { {test: true} }
       mock(Docs::Requester).run anything, satisfy { |options| options[:request_options][:params][:test] }
       result
     end
@@ -82,8 +82,8 @@ class DocsUrlScraperTest < MiniTest::Spec
     end
 
     it "returns the result" do
-      stub(Docs::Requester).run { 'response' }
-      assert_equal 'response', result
+      stub(Docs::Requester).run { "response" }
+      assert_equal "response", result
     end
   end
 
@@ -97,22 +97,22 @@ class DocsUrlScraperTest < MiniTest::Spec
     end
 
     it "raises when the response is an error" do
-      response.send 'error?=', true
+      response.send "error?=", true
       assert_raises(RuntimeError) { result }
     end
 
     it "returns false when the response isn't successful" do
-      response.send 'success?=', false
+      response.send "success?=", false
       refute result
     end
 
     it "returns false when the response isn't HTML" do
-      response.send 'html?=', false
+      response.send "html?=", false
       refute result
     end
 
     it "returns false when the response's effective url isn't in the base url" do
-      response.effective_url = 'http://not.example.com'
+      response.effective_url = "http://not.example.com"
       refute result
     end
 

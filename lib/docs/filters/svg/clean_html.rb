@@ -7,24 +7,24 @@ module Docs
       end
 
       def root
-        doc.inner_html = doc.at_css('#Documentation + dl').to_html
+        doc.inner_html = doc.at_css("#Documentation + dl").to_html
       end
 
       def other
-        css('.prevnext').remove
+        css(".prevnext").remove
 
-        if at_css('p').content.include?("\u{00AB}")
-          at_css('p').remove
+        if at_css("p").content.include?("\u{00AB}")
+          at_css("p").remove
         end
 
-        if slug == 'Attribute' || slug == 'Element'
-          at_css('h2').name = 'h1'
+        if slug == "Attribute" || slug == "Element"
+          at_css("h2").name = "h1"
         end
 
-        css('#SVG_Attributes + div[style]').each do |node|
-          node.remove_attribute('style')
-          node['class'] = 'index'
-          css('h3').each { |n| n.name = 'span' }
+        css("#SVG_Attributes + div[style]").each do |node|
+          node.remove_attribute("style")
+          node["class"] = "index"
+          css("h3").each { |n| n.name = "span" }
         end
       end
     end

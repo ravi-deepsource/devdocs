@@ -2,13 +2,13 @@ module Docs
   class Vuex
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        name = at_css('h1').content
+        name = at_css("h1").content
 
-        name.remove! '# '
+        name.remove! "# "
 
         # Add index on guides
-        unless subpath.start_with?('api')
-          sidebar_link = at_css('.sidebar-link.active')
+        unless subpath.start_with?("api")
+          sidebar_link = at_css(".sidebar-link.active")
           all_links = css('.sidebar-link:not([href="/"]):not([href="../index"])')
 
           index = all_links.index(sidebar_link)
@@ -20,33 +20,33 @@ module Docs
       end
 
       def get_type
-        'Guide'
+        "Guide"
       end
 
       def include_default_entry?
-        name != 'API Reference'
+        name != "API Reference"
       end
 
       def additional_entries
-        return [] unless subpath.start_with?('api')
+        return [] unless subpath.start_with?("api")
 
         entries = [
-          ['Component Binding Helpers', 'component-binding-helpers', 'API Reference'],
-          ['Store', 'vuex-store', 'API Reference'],
+          ["Component Binding Helpers", "component-binding-helpers", "API Reference"],
+          ["Store", "vuex-store", "API Reference"]
         ]
 
-        css('h3').each do |node|
+        css("h3").each do |node|
           entry_name = node.content.strip
 
           # Get the previous h2 title
           title = node
-          title = title.previous_element until title.name == 'h2'
+          title = title.previous_element until title.name == "h2"
           title = title.content.strip
-          title.remove! '# '
+          title.remove! "# "
 
-          entry_name.remove! '# '
+          entry_name.remove! "# "
 
-          unless entry_name.start_with?('router.')
+          unless entry_name.start_with?("router.")
             case title
             when "Vuex.Store Constructor Options"
               entry_name = "StoreOptions.#{entry_name}"
@@ -59,7 +59,7 @@ module Docs
             end
           end
 
-          entries << [entry_name, node['id'], 'API Reference']
+          entries << [entry_name, node["id"], "API Reference"]
         end
 
         entries

@@ -1,6 +1,6 @@
 module Docs
   class FileScraper < Scraper
-    SOURCE_DIRECTORY = File.expand_path '../../../../../docs', __FILE__
+    SOURCE_DIRECTORY = File.expand_path "../../../../../docs", __FILE__
 
     Response = Struct.new :body, :url
 
@@ -11,9 +11,9 @@ module Docs
       end
     end
 
-    self.base_url = 'http://localhost/'
+    self.base_url = "http://localhost/"
 
-    html_filters.push 'clean_local_urls'
+    html_filters.push "clean_local_urls"
 
     def source_directory
       @source_directory ||= File.join(SOURCE_DIRECTORY, self.class.path)
@@ -22,7 +22,7 @@ module Docs
     private
 
     def assert_source_directory_exists
-      unless Dir.exists?(source_directory)
+      unless Dir.exist?(source_directory)
         raise SetupError, "The #{self.class.name} scraper requires the original documentation files to be stored in the \"#{source_directory}\" directory."
       end
     end
@@ -52,7 +52,7 @@ module Docs
     def read_file(path)
       File.read(path)
     rescue
-      instrument 'warn.doc', msg: "Failed to open file: #{path}"
+      instrument "warn.doc", msg: "Failed to open file: #{path}"
       nil
     end
   end
