@@ -1,18 +1,18 @@
 module Docs
   class Gnuplot < FileScraper
-    self.type = 'gnuplot'
-    self.release = '5.2.8'
+    self.type = "gnuplot"
+    self.release = "5.2.8"
     self.links = {
-      home: 'http://gnuplot.sourceforge.net/'
+      home: "http://gnuplot.sourceforge.net/"
     }
 
-    self.root_path = 'nofigures.html'
+    self.root_path = "nofigures.html"
 
-    html_filters.push 'gnuplot/entries', 'gnuplot/clean_html'
+    html_filters.push "gnuplot/entries", "gnuplot/clean_html"
 
     options[:skip_links] = false
 
-    options[:skip] = %w(
+    options[:skip] = %w[
       Copyright.html
       External_libraries.html
       Known_limitations.html
@@ -30,12 +30,11 @@ module Docs
       Contents.html
       Bugs.html
       Index.html
-    )
+    ]
 
     options[:attribution] = <<-HTML
       Copyright 1986 - 1993, 1998, 2004   Thomas Williams, Colin Kelley<br>
       Distributed under the <a href="https://sourceforge.net/p/gnuplot/gnuplot-main/ci/master/tree/Copyright">gnuplot license</a> (rights to distribute modified versions are withheld).
     HTML
-
   end
 end

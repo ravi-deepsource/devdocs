@@ -23,9 +23,8 @@ module Docs
       private
 
       def entry_link
-        at_css("a[href='#{self.path}']")
+        at_css("a[href='#{path}']")
       end
     end
   end
 end
-

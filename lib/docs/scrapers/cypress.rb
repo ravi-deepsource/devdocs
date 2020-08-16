@@ -2,19 +2,19 @@
 
 module Docs
   class Cypress < UrlScraper
-    self.name = 'Cypress'
-    self.type = 'cypress'
-    self.release = '3.4.1'
-    self.base_url = 'https://docs.cypress.io'
-    self.root_path = '/api/api/table-of-contents.html'
+    self.name = "Cypress"
+    self.type = "cypress"
+    self.release = "3.4.1"
+    self.base_url = "https://docs.cypress.io"
+    self.root_path = "/api/api/table-of-contents.html"
     self.links = {
-      home: 'https://www.cypress.io/',
-      code: 'https://github.com/cypress-io/cypress',
+      home: "https://www.cypress.io/",
+      code: "https://github.com/cypress-io/cypress"
     }
 
-    html_filters.push 'cypress/entries', 'cypress/clean_html'
+    html_filters.push "cypress/entries", "cypress/clean_html"
 
-    options[:container] = '#content'
+    options[:container] = "#content"
     options[:max_image_size] = 300_000
     options[:include_default_entry] = true
 
@@ -30,7 +30,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      get_latest_github_release('cypress-io', 'cypress', opts)
+      get_latest_github_release("cypress-io", "cypress", opts)
     end
   end
 end

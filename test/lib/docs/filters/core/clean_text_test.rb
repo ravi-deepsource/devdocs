@@ -1,5 +1,5 @@
-require 'test_helper'
-require 'docs'
+require "test_helper"
+require "docs"
 
 class CleanTextFilterTest < MiniTest::Spec
   include FilterTestHelper
@@ -17,6 +17,6 @@ class CleanTextFilterTest < MiniTest::Spec
 
   it "strips leading and trailing whitespace" do
     @body = "\n\r Test \r\n"
-    assert_equal 'Test', filter_output
+    assert_equal "Test", filter_output
   end
 end
