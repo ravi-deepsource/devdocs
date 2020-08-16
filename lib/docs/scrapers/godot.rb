@@ -1,22 +1,22 @@
 module Docs
   class Godot < UrlScraper
-    self.type = 'sphinx_simple'
+    self.type = "sphinx_simple"
     self.links = {
-      home: 'https://godotengine.org/',
-      code: 'https://github.com/godotengine/godot'
+      home: "https://godotengine.org/",
+      code: "https://github.com/godotengine/godot"
     }
 
-    html_filters.push 'godot/entries', 'godot/clean_html', 'sphinx/clean_html'
+    html_filters.push "godot/entries", "godot/clean_html", "sphinx/clean_html"
 
     options[:download_images] = false
-    options[:container] = '.document .section'
+    options[:container] = ".document .section"
 
     options[:only_patterns] = [/\Alearning\//, /\Aclasses\//]
-    options[:skip] = %w(classes/class_@global\ scope.html)
+    options[:skip] = %w[classes/class_@global\ scope.html]
 
     options[:attribution] = ->(filter) do
-      if filter.subpath.start_with?('classes')
-         <<-HTML
+      if filter.subpath.start_with?("classes")
+        <<-HTML
           &copy; 2014&ndash;2019 Juan Linietsky, Ariel Manzur, Godot Engine contributors<br>
           Licensed under the MIT License.
         HTML
@@ -28,24 +28,24 @@ module Docs
       end
     end
 
-    version '3.1' do
-      self.release = '3.1.1'
-      self.base_url = "http://docs.godotengine.org/en/#{self.version}/"
+    version "3.1" do
+      self.release = "3.1.1"
+      self.base_url = "http://docs.godotengine.org/en/#{version}/"
     end
 
-    version '3.0' do
-      self.release = '3.0.6'
-      self.base_url = "http://docs.godotengine.org/en/#{self.version}/"
+    version "3.0" do
+      self.release = "3.0.6"
+      self.base_url = "http://docs.godotengine.org/en/#{version}/"
     end
 
-    version '2.1' do
-      self.release = '2.1'
-      self.base_url = "http://docs.godotengine.org/en/#{self.version}/"
+    version "2.1" do
+      self.release = "2.1"
+      self.base_url = "http://docs.godotengine.org/en/#{version}/"
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://docs.godotengine.org/', opts)
-      doc.at_css('.version').content.strip
+      doc = fetch_doc("https://docs.godotengine.org/", opts)
+      doc.at_css(".version").content.strip
     end
   end
 end

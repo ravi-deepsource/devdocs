@@ -1,28 +1,30 @@
 module Docs
   class Express < UrlScraper
-    self.name = 'Express'
-    self.type = 'express'
-    self.release = '4.16.3'
-    self.base_url = 'http://expressjs.com/en/'
-    self.root_path = '4x/api.html'
-    self.initial_paths = %w(
+    self.name = "Express"
+    self.type = "express"
+    self.release = "4.16.3"
+    self.base_url = "http://expressjs.com/en/"
+    self.root_path = "4x/api.html"
+    self.initial_paths = %w[
       starter/installing.html
       guide/routing.html
-      advanced/developing-template-engines.html )
+      advanced/developing-template-engines.html
+    ]
     self.links = {
-      home: 'http://expressjs.com/',
-      code: 'https://github.com/strongloop/express/'
+      home: "http://expressjs.com/",
+      code: "https://github.com/strongloop/express/"
     }
 
-    html_filters.push 'express/clean_html', 'express/entries', 'title'
+    html_filters.push "express/clean_html", "express/entries", "title"
 
     options[:title] = false
-    options[:root_title] = 'Express'
+    options[:root_title] = "Express"
 
     options[:only_patterns] = [
       /\Astarter/,
       /\Aguide/,
-      /\Aadvanced/ ]
+      /\Aadvanced/
+    ]
 
     options[:attribution] = <<-HTML
       &copy; 2017 StrongLoop, IBM, and other expressjs.com contributors.<br>
@@ -30,7 +32,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      get_npm_version('express', opts)
+      get_npm_version("express", opts)
     end
   end
 end

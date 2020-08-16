@@ -1,12 +1,12 @@
-require 'test_helper'
-require 'docs'
+require "test_helper"
+require "docs"
 
 class TitleFilterTest < MiniTest::Spec
   include FilterTestHelper
   self.filter_class = Docs::TitleFilter
 
   before do
-    @body = '<div>Test</div>'
+    @body = "<div>Test</div>"
   end
 
   def output_with_title(title)
@@ -20,32 +20,32 @@ class TitleFilterTest < MiniTest::Spec
 
     context "and context[:title] is a string" do
       it "prepends a heading containing the title" do
-        context[:title] = 'title'
-        assert_equal output_with_title('title'), filter_output.inner_html
+        context[:title] = "title"
+        assert_equal output_with_title("title"), filter_output.inner_html
       end
     end
   end
 
   context "when result[:entries] is an array" do
     before do
-      result[:entries] = [OpenStruct.new(name: 'name'), OpenStruct.new(name: 'name2')]
+      result[:entries] = [OpenStruct.new(name: "name"), OpenStruct.new(name: "name2")]
     end
 
     it "prepends a heading containing the first entry's name" do
-      assert_equal output_with_title('name'), filter_output.inner_html
+      assert_equal output_with_title("name"), filter_output.inner_html
     end
 
     context "and context[:title] is a string" do
       it "prepends a heading containing the title" do
-        context[:title] = 'title'
-        assert_equal output_with_title('title'), filter_output.inner_html
+        context[:title] = "title"
+        assert_equal output_with_title("title"), filter_output.inner_html
       end
     end
 
     context "and context[:title] is nil" do
       it "prepends a heading containing the first entry's name" do
         context[:title] = nil
-        assert_equal output_with_title('name'), filter_output.inner_html
+        assert_equal output_with_title("name"), filter_output.inner_html
       end
     end
 
@@ -59,29 +59,29 @@ class TitleFilterTest < MiniTest::Spec
 
   context "when context[:root_title] is a string" do
     before do
-      context[:root_title] = 'root'
+      context[:root_title] = "root"
     end
 
     context "and context[:title] is a string" do
       before do
-        context[:title] = 'title'
+        context[:title] = "title"
       end
 
       it "prepends a heading containing the root title when #root_page? is true" do
         stub(filter).root_page? { true }
-        assert_equal output_with_title('root'), filter_output.inner_html
+        assert_equal output_with_title("root"), filter_output.inner_html
       end
 
       it "prepends a heading containing the title when #root_page? is false" do
         stub(filter).root_page? { false }
-        assert_equal output_with_title('title'), filter_output.inner_html
+        assert_equal output_with_title("title"), filter_output.inner_html
       end
     end
   end
 
   context "when context[:title] is a string" do
     before do
-      context[:title] = 'title'
+      context[:title] = "title"
     end
 
     context "and context[:root_title] is false" do
@@ -101,8 +101,8 @@ class TitleFilterTest < MiniTest::Spec
     end
 
     it "prepends a heading tag containing the title returned by the block" do
-      context[:title] = ->(_) { 'title' }
-      assert_equal output_with_title('title'), filter_output.inner_html
+      context[:title] = ->(_) { "title" }
+      assert_equal output_with_title("title"), filter_output.inner_html
     end
 
     it "does nothing when the block returns nil" do

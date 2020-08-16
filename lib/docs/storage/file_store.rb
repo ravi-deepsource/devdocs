@@ -1,5 +1,5 @@
-require 'fileutils'
-require 'find'
+require "fileutils"
+require "find"
 
 module Docs
   class FileStore < AbstractStore
@@ -19,7 +19,7 @@ module Docs
       end
     end
 
-    alias_method :update_file, :create_file
+    alias update_file create_file
 
     def delete_file(path)
       if File.directory?(path)
@@ -30,7 +30,7 @@ module Docs
     end
 
     def file_exist?(path)
-      File.exists?(path)
+      File.exist?(path)
     end
 
     def file_mtime(path)
@@ -44,9 +44,9 @@ module Docs
     def list_files(path)
       Find.find path do |file|
         next if file == path
-        Find.prune if File.basename(file)[0] == '.'
+        Find.prune if File.basename(file)[0] == "."
         yield file
-        Find.prune unless File.exists?(file)
+        Find.prune unless File.exist?(file)
       end
     end
   end

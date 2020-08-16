@@ -12,9 +12,9 @@ module Docs
       self.type = type
 
       unless root?
-        raise Invalid, 'missing name' if !name || name.empty?
-        raise Invalid, 'missing path' if !path || path.empty?
-        raise Invalid, 'missing type' if !type || type.empty?
+        raise Invalid, "missing name" if !name || name.empty?
+        raise Invalid, "missing path" if !path || path.empty?
+        raise Invalid, "missing type" if !type || type.empty?
       end
     end
 
@@ -31,11 +31,11 @@ module Docs
     end
 
     def root?
-      path == 'index'
+      path == "index"
     end
 
     def as_json
-      { name: name, path: path, type: type }
+      {name: name, path: path, type: type}
     end
   end
 end

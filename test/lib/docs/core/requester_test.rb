@@ -1,5 +1,5 @@
-require 'test_helper'
-require 'docs'
+require "test_helper"
+require "docs"
 
 class DocsRequesterTest < MiniTest::Spec
   def stub_request(url)
@@ -11,15 +11,15 @@ class DocsRequesterTest < MiniTest::Spec
   end
 
   let :url do
-    'http://example.com'
+    "http://example.com"
   end
 
   let :options do
-    Hash.new
+    {}
   end
 
   let :block do
-    Proc.new {}
+    proc {}
   end
 
   after do
@@ -33,7 +33,7 @@ class DocsRequesterTest < MiniTest::Spec
     end
 
     it "duplicates and stores :request_options" do
-      options[:request_options] = { params: 'test' }
+      options[:request_options] = {params: "test"}
       assert_equal options[:request_options], requester.request_options
       refute_same options[:request_options], requester.request_options
     end
@@ -57,15 +57,15 @@ class DocsRequesterTest < MiniTest::Spec
         end
 
         it "has the default :request_options" do
-          options[:request_options] = { params: 'test' }
+          options[:request_options] = {params: "test"}
           request = requester.request(url)
-          assert_equal 'test', request.options[:params]
+          assert_equal "test", request.options[:params]
         end
 
         it "has the given options" do
-          options[:request_options] = { params: '' }
-          request = requester.request(url, params: 'test')
-          assert_equal 'test', request.options[:params]
+          options[:request_options] = {params: ""}
+          request = requester.request(url, params: "test")
+          assert_equal "test", request.options[:params]
         end
 
         it "has the given block as an on_complete callback" do
@@ -77,17 +77,17 @@ class DocsRequesterTest < MiniTest::Spec
 
     context "with an array of urls" do
       let :urls do
-        ['one', 'two']
+        ["one", "two"]
       end
 
       it "returns an array of requests" do
-        result = requester.request(urls, { params: 'test' }, &block)
+        result = requester.request(urls, {params: "test"}, &block)
         assert_instance_of Array, result
         assert_equal urls.length, result.length
         assert result.all? { |obj| obj.instance_of? Docs::Request }
         urls.each_with_index do |url, i|
           assert_equal url, result[i].base_url
-          assert_equal 'test', result[i].options[:params]
+          assert_equal "test", result[i].options[:params]
           assert_includes result[i].on_complete, block
         end
       end
@@ -125,8 +125,8 @@ class DocsRequesterTest < MiniTest::Spec
         requester.request(url)
       end
 
-      assert_difference 'one', 2 do
-        assert_difference 'two', 4 do
+      assert_difference "one", 2 do
+        assert_difference "two", 4 do
           requester.run
         end
       end
@@ -142,9 +142,9 @@ class DocsRequesterTest < MiniTest::Spec
 
     context "when an #on_response callback returns an array" do
       it "requests the urls in the array" do
-        requester.on_response { ['one', 'two'] }
+        requester.on_response { ["one", "two"] }
         requester.request(url)
-        mock(requester).request('one').then.request('two')
+        mock(requester).request("one").then.request("two")
         requester.run
       end
     end

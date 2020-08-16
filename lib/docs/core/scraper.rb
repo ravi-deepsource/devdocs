@@ -1,4 +1,4 @@
-require 'set'
+require "set"
 
 module Docs
   class Scraper < Doc
@@ -10,7 +10,7 @@ module Docs
 
         subclass.class_eval do
           extend AutoloadHelper
-          autoload_all "docs/filters/#{to_s.demodulize.underscore}", 'filter'
+          autoload_all "docs/filters/#{to_s.demodulize.underscore}", "filter"
         end
 
         subclass.base_url = base_url
@@ -41,9 +41,9 @@ module Docs
     self.html_filters = FilterStack.new
     self.text_filters = FilterStack.new
 
-    html_filters.push 'apply_base_url', 'container', 'clean_html', 'normalize_urls', 'internal_urls', 'normalize_paths', 'parse_cf_email'
-    text_filters.push 'images' # ensure the images filter runs after all html filters
-    text_filters.push 'inner_html', 'clean_text', 'attribution'
+    html_filters.push "apply_base_url", "container", "clean_html", "normalize_urls", "internal_urls", "normalize_paths", "parse_cf_email"
+    text_filters.push "images" # ensure the images filter runs after all html filters
+    text_filters.push "inner_html", "clean_text", "attribution"
 
     def initialize
       super
@@ -56,8 +56,8 @@ module Docs
           Typhoeus::Response.new \
             effective_url: url_for(path),
             code: 200,
-            headers: { 'Content-Type' => 'text/html' },
-            body: self.instance_exec(&block)
+            headers: {"Content-Type" => "text/html"},
+            body: instance_exec(&block)
         end
       end
     end
@@ -71,14 +71,14 @@ module Docs
 
     def build_pages
       history = Set.new initial_urls.map(&:downcase)
-      instrument 'running.scraper', urls: initial_urls
+      instrument "running.scraper", urls: initial_urls
 
       request_all initial_urls do |response|
         next unless data = handle_response(response)
         yield data
         next unless data[:internal_urls].present?
         next_urls = data[:internal_urls].select { |url| history.add?(url.downcase) }
-        instrument 'queued.scraper', urls: next_urls
+        instrument "queued.scraper", urls: next_urls
         next_urls
       end
     end
@@ -96,7 +96,7 @@ module Docs
     end
 
     def root_path?
-      root_path.present? && root_path != '/'
+      root_path.present? && root_path != "/"
     end
 
     def initial_paths
@@ -120,11 +120,11 @@ module Docs
                        version: self.class.version, release: self.class.release
 
         if root_path?
-          (options[:skip] ||= []).concat ['', '/']
+          (options[:skip] ||= []).concat ["", "/"]
         end
 
         if options[:only] || options[:only_patterns]
-          (options[:only] ||= []).concat initial_paths + (root_path? ? [root_path] : ['', '/'])
+          (options[:only] ||= []).concat initial_paths + (root_path? ? [root_path] : ["", "/"])
         end
 
         options.merge!(additional_options)
@@ -147,7 +147,7 @@ module Docs
     end
 
     def url_for(path)
-      if path.empty? || path == '/'
+      if path.empty? || path == "/"
         root_url.to_s
       else
         File.join(base_url.to_s, path)
@@ -156,15 +156,15 @@ module Docs
 
     def handle_response(response)
       if process_response?(response)
-        instrument 'process_response.scraper', response: response do
+        instrument "process_response.scraper", response: response do
           process_response(response)
         end
       else
-        instrument 'ignore_response.scraper', response: response
+        instrument "ignore_response.scraper", response: response
       end
     rescue => e
       if Docs.rescue_errors
-        instrument 'error.doc', exception: e, url: response.url
+        instrument "error.doc", exception: e, url: response.url
         nil
       else
         raise e
@@ -219,9 +219,9 @@ module Docs
         end
 
         def store_pages(store)
-          instrument 'info.doc', msg: 'Building internal urls...'
+          instrument "info.doc", msg: "Building internal urls..."
           with_internal_urls do
-            instrument 'info.doc', msg: 'Continuing...'
+            instrument "info.doc", msg: "Continuing..."
             super
           end
         end

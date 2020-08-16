@@ -2,51 +2,51 @@ module Docs
   class Ansible
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        name = at_css('h1').content.strip
+        name = at_css("h1").content.strip
         name.remove! "\u{00B6}"
-        name.remove! %r{ \- .*}
-        name.remove! 'Introduction To '
+        name.remove! %r{ - .*}
+        name.remove! "Introduction To "
         name.remove! %r{ Guide\z}
         name
       end
 
       def get_type
-        if version == '2.4'
-          if slug.include?('module')
-            if name =~ /\A[a-z]/ && node = css('.toctree-l2.current').last
-              return "Modules: #{node.content.remove(' Modules')}"
+        if version == "2.4"
+          if slug.include?("module")
+            if name =~ /\A[a-z]/ && node = css(".toctree-l2.current").last
+              return "Modules: #{node.content.remove(" Modules")}"
             else
-              return 'Modules'
+              return "Modules"
             end
           end
         end
 
-        if slug =~ /\Acli\//
-          'CLI Reference'
-        elsif slug =~ /\Anetwork\//
-          'Network'
-        elsif slug =~ /\Aplugins\//
-          if name =~ /\A[a-z]/ && node = css('.toctree-l3.current').last
-            "Plugins: #{node.content.sub(/ Plugins.*/, '')}"
+        if /\Acli\//.match?(slug)
+          "CLI Reference"
+        elsif /\Anetwork\//.match?(slug)
+          "Network"
+        elsif /\Aplugins\//.match?(slug)
+          if name =~ /\A[a-z]/ && node = css(".toctree-l3.current").last
+            "Plugins: #{node.content.sub(/ Plugins.*/, "")}"
           else
-            'Plugins'
+            "Plugins"
           end
-        elsif slug =~ /\Amodules\//
-          if slug =~ /\Amodules\/list_/ || slug=~ /_maintained\z/
-            'Modules: Categories'
+        elsif /\Amodules\//.match?(slug)
+          if slug =~ /\Amodules\/list_/ || slug =~ /_maintained\z/
+            "Modules: Categories"
           else
-            'Modules'
+            "Modules"
           end
-        elsif slug.include?('playbook')
-          'Playbooks'
-        elsif slug =~ /\Auser_guide\//
-          'Guides: User'
-        elsif slug =~ /\Ascenario_guides\//
-          'Guides: Scenarios'
-        elsif slug.include?('guide')
-          'Guides'
+        elsif slug.include?("playbook")
+          "Playbooks"
+        elsif /\Auser_guide\//.match?(slug)
+          "Guides: User"
+        elsif /\Ascenario_guides\//.match?(slug)
+          "Guides: Scenarios"
+        elsif slug.include?("guide")
+          "Guides"
         else
-          'Miscellaneous'
+          "Miscellaneous"
         end
       end
     end

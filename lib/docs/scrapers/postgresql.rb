@@ -2,23 +2,23 @@ module Docs
   class Postgresql < UrlScraper
     include FixInternalUrlsBehavior
 
-    self.name = 'PostgreSQL'
-    self.type = 'postgres'
-    self.root_path = 'reference.html'
-    self.initial_paths = %w(sql.html admin.html internals.html appendixes.html tutorial.html)
+    self.name = "PostgreSQL"
+    self.type = "postgres"
+    self.root_path = "reference.html"
+    self.initial_paths = %w[sql.html admin.html internals.html appendixes.html tutorial.html]
     self.links = {
-      home: 'https://www.postgresql.org/',
-      code: 'https://git.postgresql.org/gitweb/?p=postgresql.git'
+      home: "https://www.postgresql.org/",
+      code: "https://git.postgresql.org/gitweb/?p=postgresql.git"
     }
 
-    html_filters.insert_before 'normalize_urls', 'postgresql/extract_metadata'
-    html_filters.push 'postgresql/clean_html', 'postgresql/entries', 'title'
+    html_filters.insert_before "normalize_urls", "postgresql/extract_metadata"
+    html_filters.push "postgresql/clean_html", "postgresql/entries", "title"
 
     options[:title] = false
-    options[:root_title] = 'PostgreSQL'
+    options[:root_title] = "PostgreSQL"
     options[:follow_links] = ->(filter) { filter.initial_page? }
 
-    options[:skip] = %w(
+    options[:skip] = %w[
       index.html
       ddl-others.html
       functions-event-triggers.html
@@ -31,7 +31,8 @@ module Docs
       sourcerepo.html
       git.html
       bug-reporting.html
-      client-interfaces.html)
+      client-interfaces.html
+    ]
 
     options[:skip_patterns] = [
       /\Ainstall/,
@@ -48,52 +49,53 @@ module Docs
       /\Aexternal/,
       /\Adocguide/,
       /\Afeatures/,
-      /\Aunsupported-features/ ]
+      /\Aunsupported-features/
+    ]
 
     options[:attribution] = <<-HTML
       &copy; 1996&ndash;2019 The PostgreSQL Global Development Group<br>
       Licensed under the PostgreSQL License.
     HTML
 
-    version '12' do
-      self.release = '12.1'
+    version "12" do
+      self.release = "12.1"
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
     end
 
-    version '11' do
-      self.release = '11.6'
+    version "11" do
+      self.release = "11.6"
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
     end
 
-    version '10' do
-      self.release = '10.11'
+    version "10" do
+      self.release = "10.11"
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
     end
 
-    version '9.6' do
-      self.release = '9.6.16'
+    version "9.6" do
+      self.release = "9.6.16"
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
 
-      html_filters.insert_before 'postgresql/extract_metadata', 'postgresql/normalize_class_names'
+      html_filters.insert_before "postgresql/extract_metadata", "postgresql/normalize_class_names"
     end
 
-    version '9.5' do
-      self.release = '9.5.20'
+    version "9.5" do
+      self.release = "9.5.20"
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
 
-      html_filters.insert_before 'postgresql/extract_metadata', 'postgresql/normalize_class_names'
+      html_filters.insert_before "postgresql/extract_metadata", "postgresql/normalize_class_names"
     end
 
-    version '9.4' do
-      self.release = '9.4.25'
+    version "9.4" do
+      self.release = "9.4.25"
       self.base_url = "https://www.postgresql.org/docs/#{version}/"
 
-      html_filters.insert_before 'postgresql/extract_metadata', 'postgresql/normalize_class_names'
+      html_filters.insert_before "postgresql/extract_metadata", "postgresql/normalize_class_names"
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://www.postgresql.org/docs/current/index.html', opts)
-      label = doc.at_css('#pgContentWrap h1.title').content
+      doc = fetch_doc("https://www.postgresql.org/docs/current/index.html", opts)
+      label = doc.at_css("#pgContentWrap h1.title").content
       label.scan(/([0-9.]+)/)[0][0]
     end
   end

@@ -1,17 +1,17 @@
 module Docs
   class Sequelize < UrlScraper
-    self.name = 'Sequelize'
-    self.slug = 'sequelize'
-    self.type = 'simple'
-    self.release = '5.21.1'
-    self.base_url = 'https://sequelize.org/master/'
+    self.name = "Sequelize"
+    self.slug = "sequelize"
+    self.type = "simple"
+    self.release = "5.21.1"
+    self.base_url = "https://sequelize.org/master/"
     self.links = {
-      home: 'https://sequelize.org/',
-      code: 'https://github.com/sequelize/sequelize'
+      home: "https://sequelize.org/",
+      code: "https://github.com/sequelize/sequelize"
     }
 
     # List of content filters (to be applied sequentially)
-    html_filters.push 'sequelize/entries', 'sequelize/clean_html'
+    html_filters.push "sequelize/entries", "sequelize/clean_html"
 
     # Skip the source files, the license page and the "Who's using Sequelize" page
     options[:skip_patterns] = [/\.js\.html/, /manual\/legal\.html/, /manual\/whos-using\.html/]
@@ -24,7 +24,7 @@ module Docs
 
     # Method to fetch the most recent version of the project
     def get_latest_version(opts)
-     get_npm_version('sequelize', opts)
+      get_npm_version("sequelize", opts)
     end
   end
 end

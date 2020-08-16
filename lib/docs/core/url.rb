@@ -1,9 +1,9 @@
-require 'uri'
-require 'pathname'
+require "uri"
+require "pathname"
 
 module Docs
   class URL < URI::Generic
-    PARSER = URI::Parser.new
+    PARSER = URI::DEFAULT_PARSER
 
     def initialize(*args)
       if args.empty?
@@ -17,7 +17,7 @@ module Docs
     end
 
     def self.parse(url)
-      return url if url.kind_of? self
+      return url if url.is_a? self
       new(*PARSER.split(url), PARSER)
     end
 
@@ -49,13 +49,11 @@ module Docs
         origin.downcase!
         origin << ":#{port}" if port
         origin
-      else
-        nil
       end
     end
 
     def normalized_path
-      path == '' ? '/' : path
+      path == "" ? "/" : path
     end
 
     def subpath_to(url, options = nil)
@@ -71,8 +69,8 @@ module Docs
       end
 
       if base == dest
-        ''
-      elsif dest.start_with?(::File.join(base, ''))
+        ""
+      elsif dest.start_with?(::File.join(base, ""))
         url.path[(path.length)..-1]
       end
     end
@@ -90,17 +88,17 @@ module Docs
       return unless origin == url.origin
 
       base_dir = Pathname.new(normalized_path)
-      base_dir = base_dir.parent unless path.end_with? '/'
+      base_dir = base_dir.parent unless path.end_with? "/"
 
       dest = url.normalized_path
       dest_dir = Pathname.new(dest)
 
-      if dest.end_with? '/'
+      if dest.end_with? "/"
         dest_dir.relative_path_from(base_dir).to_s.tap do |result|
-          result << '/' if result != '.'
+          result << "/" if result != "."
         end
       else
-        dest_dir.parent.relative_path_from(base_dir).join(dest.split('/').last).to_s
+        dest_dir.parent.relative_path_from(base_dir).join(dest.split("/").last).to_s
       end
     end
 
