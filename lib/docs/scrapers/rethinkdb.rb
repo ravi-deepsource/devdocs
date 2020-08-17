@@ -1,28 +1,29 @@
 module Docs
   class Rethinkdb < UrlScraper
-    self.name = 'RethinkDB'
-    self.type = 'rethinkdb'
-    self.base_url = 'https://rethinkdb.com/'
-    self.release = '2.3.5'
-    self.root_path = 'docs/'
+    self.name = "RethinkDB"
+    self.type = "rethinkdb"
+    self.base_url = "https://rethinkdb.com/"
+    self.release = "2.3.5"
+    self.root_path = "docs/"
     self.links = {
-      home: 'https://rethinkdb.com/',
-      code: 'https://github.com/rethinkdb/rethinkdb'
+      home: "https://rethinkdb.com/",
+      code: "https://github.com/rethinkdb/rethinkdb"
     }
 
-    html_filters.push 'rethinkdb/entries', 'rethinkdb/clean_html'
+    html_filters.push "rethinkdb/entries", "rethinkdb/clean_html"
 
     options[:trailing_slash] = true
-    options[:container] = '.documentation'
+    options[:container] = ".documentation"
 
     options[:only_patterns] = [/\Adocs/]
-    options[:skip_patterns] = [/docs\/install(\-drivers)?\/./]
-    options[:skip] = %w(
+    options[:skip_patterns] = [/docs\/install(-drivers)?\/./]
+    options[:skip] = %w[
       docs/build/
       docs/tutorials/elections/
-      docs/tutorials/superheroes/)
+      docs/tutorials/superheroes/
+    ]
 
-    MULTILANG_DOCS = %w(
+    MULTILANG_DOCS = %w[
       changefeeds
       cookbook
       dates-and-times
@@ -33,14 +34,15 @@ module Docs
       rabbitmq
       secondary-indexes
       sql-to-reql
-      storing-binary)
+      storing-binary
+    ]
 
     options[:attribution] = <<-HTML
       &copy; RethinkDB contributors<br>
       Licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License.
     HTML
 
-    %w(JavaScript Ruby Python Java).each do |name|
+    %w[JavaScript Ruby Python Java].each do |name|
       path = name.downcase
       instance_eval <<-CODE
         version '#{name}' do
@@ -49,8 +51,8 @@ module Docs
           options[:only_patterns] += [/\\Aapi\\/#{path}\\//]
 
           options[:fix_urls] = ->(url) do
-            url.sub! %r{rethinkdb.com/docs/(#{MULTILANG_DOCS.join('|')})\\z}, 'rethinkdb.com/docs/\\1/#{path}/'
-            url.sub! %r{rethinkdb.com/docs/(#{MULTILANG_DOCS.join('|')})/(?!#{path}/).*}, 'rethinkdb.com/docs/\\1/#{path}/'
+            url.sub! %r{rethinkdb.com/docs/(#{MULTILANG_DOCS.join("|")})\\z}, 'rethinkdb.com/docs/\\1/#{path}/'
+            url.sub! %r{rethinkdb.com/docs/(#{MULTILANG_DOCS.join("|")})/(?!#{path}/).*}, 'rethinkdb.com/docs/\\1/#{path}/'
             url.sub! %r{rethinkdb.com/api/(?!javascript|ruby|python|java)}, 'rethinkdb.com/api/#{path}/'
             url
           end
@@ -59,7 +61,7 @@ module Docs
     end
 
     def get_latest_version(opts)
-      get_latest_github_release('rethinkdb', 'rethinkdb', opts)
+      get_latest_github_release("rethinkdb", "rethinkdb", opts)
     end
 
     private

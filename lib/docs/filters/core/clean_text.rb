@@ -6,7 +6,7 @@ module Docs
 
     def call
       html.strip!
-      while html.gsub!(EMPTY_NODES_RGX, ''); end
+      while html.gsub!(EMPTY_NODES_RGX, ""); end
       html
     end
   end

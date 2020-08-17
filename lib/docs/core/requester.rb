@@ -27,9 +27,9 @@ module Docs
     end
 
     def request(urls, options = {}, &block)
-      requests = [urls].flatten.map do |url|
+      requests = [urls].flatten.map { |url|
         build_and_queue_request(url, options, &block)
-      end
+      }
       requests.length == 1 ? requests.first : requests
     end
 
@@ -54,7 +54,7 @@ module Docs
     end
 
     def handle_response(response)
-      instrument 'handle_response.requester', url: response.url do
+      instrument "handle_response.requester", url: response.url do
         on_response.each do |callback|
           result = callback.call(response)
           result.each { |url| request(url) } if result.is_a?(Array)

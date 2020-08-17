@@ -6,16 +6,16 @@ module Docs
     #   3. Run "rake docs" (in the Minitest directory)
     #   4. Copy the "docs" directory to "docs/minitest"
 
-    self.name = 'Ruby / Minitest'
-    self.slug = 'minitest'
-    self.release = '5.11.3'
+    self.name = "Ruby / Minitest"
+    self.slug = "minitest"
+    self.release = "5.11.3"
     self.links = {
-      code: 'https://github.com/seattlerb/minitest'
+      code: "https://github.com/seattlerb/minitest"
     }
 
-    html_filters.replace 'rdoc/entries', 'minitest/entries'
+    html_filters.replace "rdoc/entries", "minitest/entries"
 
-    options[:root_title] = 'Minitest'
+    options[:root_title] = "Minitest"
 
     options[:attribution] = <<-HTML
       &copy; Ryan Davis, seattle.rb<br>
@@ -23,7 +23,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      contents = get_github_file_contents('seattlerb', 'minitest', 'History.rdoc', opts)
+      contents = get_github_file_contents("seattlerb", "minitest", "History.rdoc", opts)
       contents.scan(/([0-9.]+)/)[0][0]
     end
   end

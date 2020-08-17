@@ -4,7 +4,7 @@ module Docs
       def get_type
         type = name.dup
         type.remove! %r{#.+\z}
-        type.split('::')[0..1].join('::')
+        type.split("::")[0..1].join("::")
       end
     end
   end

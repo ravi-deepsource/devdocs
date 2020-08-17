@@ -2,7 +2,7 @@ module Docs
   class Mdn
     class ContributeLinkFilter < Filter
       def call
-        return html if current_url.host != 'developer.mozilla.org'
+        return html if current_url.host != "developer.mozilla.org"
 
         html << <<-HTML.strip_heredoc
           <div class="_attribution">
