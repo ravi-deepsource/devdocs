@@ -27,7 +27,7 @@ module Docs
     end
 
     def attribution_link
-      unless base_url.host == 'localhost'
+      unless base_url.host == "localhost"
         %(<a href="#{current_url}" class="_attribution-link">#{current_url}</a>)
       end
     end

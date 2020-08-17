@@ -1,14 +1,14 @@
-require 'test_helper'
-require 'docs'
+require "test_helper"
+require "docs"
 
 class FileScraperTest < MiniTest::Spec
-  ROOT_PATH = File.expand_path('../../../../../../', __FILE__)
+  ROOT_PATH = File.expand_path("../../../../../../", __FILE__)
 
   class Scraper < Docs::FileScraper
     self.html_filters = Docs::FilterStack.new
     self.text_filters = Docs::FilterStack.new
 
-    version 'version' do; end
+    version "version" do; end
   end
 
   let :scraper do
@@ -20,7 +20,7 @@ class FileScraperTest < MiniTest::Spec
   end
 
   let :response do
-    OpenStruct.new body: 'body', url: Docs::URL.parse(Scraper.base_url)
+    OpenStruct.new body: "body", url: Docs::URL.parse(Scraper.base_url)
   end
 
   describe ".inherited" do
@@ -31,14 +31,14 @@ class FileScraperTest < MiniTest::Spec
 
   describe "#source_directory" do
     it "returns the directory at docs/[slug]" do
-      assert_equal File.join(ROOT_PATH, 'docs', 'scraper'), scraper.source_directory
-      assert_equal File.join(ROOT_PATH, 'docs', 'scraper~version'), versioned_scraper.source_directory
+      assert_equal File.join(ROOT_PATH, "docs", "scraper"), scraper.source_directory
+      assert_equal File.join(ROOT_PATH, "docs", "scraper~version"), versioned_scraper.source_directory
     end
   end
 
   describe "#request_one" do
     let :path do
-      'path'
+      "path"
     end
 
     let :result do
@@ -63,14 +63,14 @@ class FileScraperTest < MiniTest::Spec
       end
 
       it "reads a file" do
-        mock(scraper).read_file(File.join(ROOT_PATH, 'docs/scraper', path))
+        mock(scraper).read_file(File.join(ROOT_PATH, "docs/scraper", path))
         result
       end
 
       describe "the returned response object" do
         it "has a #body" do
-          stub(scraper).read_file { 'body' }
-          assert_equal 'body', result.body
+          stub(scraper).read_file { "body" }
+          assert_equal "body", result.body
         end
 
         it "has a #url" do
@@ -83,7 +83,7 @@ class FileScraperTest < MiniTest::Spec
 
   describe "#request_all" do
     let :urls do
-      %w(one two)
+      %w[one two]
     end
 
     context "when the source directory doesn't exist" do
@@ -100,8 +100,8 @@ class FileScraperTest < MiniTest::Spec
       end
 
       it "requests the given url" do
-        mock(scraper).request_one('url')
-        scraper.send(:request_all, 'url') {}
+        mock(scraper).request_one("url")
+        scraper.send(:request_all, "url") {}
       end
 
       it "requests the given urls" do
@@ -120,11 +120,11 @@ class FileScraperTest < MiniTest::Spec
 
       context "when the block returns an array" do
         let :next_urls do
-          %w(three four)
+          %w[three four]
         end
 
         let :all_urls do
-          urls + %w(three four)
+          urls + %w[three four]
         end
 
         it "requests the returned urls" do
@@ -153,28 +153,28 @@ class FileScraperTest < MiniTest::Spec
     end
 
     it "returns false when the response body is blank" do
-      response.body = ''
+      response.body = ""
       refute result
     end
 
     it "returns true when the response body isn't blank" do
-      response.body = 'body'
+      response.body = "body"
       assert result
     end
   end
 
   describe "#read_file" do
     let :result do
-      scraper.send :read_file, File.join(ROOT_PATH, 'docs', 'scraper', 'file')
+      scraper.send :read_file, File.join(ROOT_PATH, "docs", "scraper", "file")
     end
 
     it "returns the file's content when the file exists in the source directory" do
-      stub(File).read(File.join(ROOT_PATH, 'docs', 'scraper', 'file')) { 'content' }
-      assert_equal 'content', result
+      stub(File).read(File.join(ROOT_PATH, "docs", "scraper", "file")) { "content" }
+      assert_equal "content", result
     end
 
     it "returns nil when the file doesn't exist" do
-      stub(File).read(File.join(ROOT_PATH, 'docs', 'scraper', 'file')) { raise }
+      stub(File).read(File.join(ROOT_PATH, "docs", "scraper", "file")) { raise }
       assert_nil result
     end
   end

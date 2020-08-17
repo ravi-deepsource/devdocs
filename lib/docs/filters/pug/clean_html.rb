@@ -2,24 +2,24 @@ module Docs
   class Pug
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('.main')
+        @doc = at_css(".main")
 
-        at_css('h1').content = 'Pug Documentation' if root_page?
+        at_css("h1").content = "Pug Documentation" if root_page?
 
-        if slug == 'api/reference'
-          at_css('.alert-info').remove
+        if slug == "api/reference"
+          at_css(".alert-info").remove
         end
 
-        css('.header-anchor').remove
+        css(".header-anchor").remove
 
-        css('.preview-wrapper').each do |node|
-          node.css('pre').each do |n|
+        css(".preview-wrapper").each do |node|
+          node.css("pre").each do |n|
             node.before(n)
           end
           node.remove
         end
 
-        css('pre').each do |node|
+        css("pre").each do |node|
           node.content = node.content
         end
 

@@ -2,7 +2,7 @@ module Docs
   class Html
     class CleanHtmlFilter < Filter
       def call
-        css('section', 'div.section', 'div.row').each do |node|
+        css("section", "div.section", "div.row").each do |node|
           node.before(node.children).remove
         end
 

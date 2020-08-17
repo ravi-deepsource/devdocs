@@ -1,15 +1,15 @@
 module Docs
   class Requirejs < UrlScraper
-    self.name = 'RequireJS'
-    self.type = 'simple'
-    self.release = '2.3.5'
-    self.base_url = 'http://requirejs.org/docs/'
+    self.name = "RequireJS"
+    self.type = "simple"
+    self.release = "2.3.5"
+    self.base_url = "http://requirejs.org/docs/"
     self.links = {
-      home: 'http://requirejs.org/',
-      code: 'https://github.com/requirejs/requirejs'
+      home: "http://requirejs.org/",
+      code: "https://github.com/requirejs/requirejs"
     }
-    self.root_path = 'api.html'
-    self.initial_paths = %w(
+    self.root_path = "api.html"
+    self.initial_paths = %w[
       optimization.html
       jquery.html
       node.html
@@ -18,13 +18,14 @@ module Docs
       errors.html
       plugins.html
       why.html
-      whyamd.html)
+      whyamd.html
+    ]
 
-    html_filters.push 'requirejs/clean_html', 'requirejs/entries'
+    html_filters.push "requirejs/clean_html", "requirejs/entries"
 
-    options[:container] = '#content'
+    options[:container] = "#content"
     options[:follow_links] = false
-    options[:only] = self.initial_paths
+    options[:only] = initial_paths
 
     options[:attribution] = <<-HTML
       &copy; jQuery Foundation and other contributors<br>
@@ -32,7 +33,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      get_npm_version('requirejs', opts)
+      get_npm_version("requirejs", opts)
     end
   end
 end

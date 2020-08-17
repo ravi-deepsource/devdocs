@@ -1,16 +1,16 @@
 module Docs
   class Lodash < UrlScraper
-    self.name = 'lodash'
-    self.slug = 'lodash'
-    self.type = 'simple'
+    self.name = "lodash"
+    self.slug = "lodash"
+    self.type = "simple"
     self.links = {
-      home: 'https://lodash.com/',
-      code: 'https://github.com/lodash/lodash/'
+      home: "https://lodash.com/",
+      code: "https://github.com/lodash/lodash/"
     }
 
-    html_filters.push 'lodash/entries', 'lodash/clean_html', 'title'
+    html_filters.push "lodash/entries", "lodash/clean_html", "title"
 
-    options[:title] = 'lodash'
+    options[:title] = "lodash"
     options[:skip_links] = true
 
     options[:attribution] = <<-HTML
@@ -18,24 +18,24 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    version '4' do
-      self.release = '4.17.10'
+    version "4" do
+      self.release = "4.17.10"
       self.base_url = "https://lodash.com/docs/#{release}"
     end
 
-    version '3' do
-      self.release = '3.10.1'
+    version "3" do
+      self.release = "3.10.1"
       self.base_url = "https://lodash.com/docs/#{release}"
     end
 
-    version '2' do
-      self.release = '2.4.2'
+    version "2" do
+      self.release = "2.4.2"
       self.base_url = "https://lodash.com/docs/#{release}"
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://lodash.com/docs/', opts)
-      doc.at_css('#version > option[selected]').content
+      doc = fetch_doc("https://lodash.com/docs/", opts)
+      doc.at_css("#version > option[selected]").content
     end
   end
 end

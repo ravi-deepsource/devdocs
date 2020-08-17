@@ -1,10 +1,10 @@
-require 'test_helper'
-require 'docs'
+require "test_helper"
+require "docs"
 
 class ManifestTest < MiniTest::Spec
   let :doc do
     doc = Class.new Docs::Doc
-    doc.name = 'TestDoc'
+    doc.name = "TestDoc"
     doc
   end
 
@@ -33,8 +33,8 @@ class ManifestTest < MiniTest::Spec
       end
 
       it "contains the manifest's JSON dump" do
-        stub(manifest).to_json { 'json' }
-        mock(store).write anything, 'json'
+        stub(manifest).to_json { "json" }
+        mock(store).write anything, "json"
         manifest.store
       end
     end
@@ -42,7 +42,7 @@ class ManifestTest < MiniTest::Spec
 
   describe "#as_json" do
     let :meta_path do
-      'meta_path'
+      "meta_path"
     end
 
     before do
@@ -63,7 +63,7 @@ class ManifestTest < MiniTest::Spec
       it "includes the doc's meta representation" do
         json = manifest.as_json
         assert_equal 1, json.length
-        assert_equal 'Test', json[0]['name']
+        assert_equal "Test", json[0]["name"]
       end
     end
 
@@ -77,7 +77,7 @@ class ManifestTest < MiniTest::Spec
 
   describe "#to_json" do
     it "returns the JSON string for #as_json" do
-      stub(manifest).as_json { { test: 'ok' } }
+      stub(manifest).as_json { {test: "ok"} }
       assert_equal "{\n  \"test\": \"ok\"\n}", manifest.to_json
     end
   end

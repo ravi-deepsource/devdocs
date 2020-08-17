@@ -1,7 +1,7 @@
 module Docs
   class NullStore < AbstractStore
     def initialize
-      super '/'
+      super "/"
     end
 
     private
@@ -10,13 +10,13 @@ module Docs
       nil
     end
 
-    alias_method :read_file, :nil
-    alias_method :create_file, :nil
-    alias_method :update_file, :nil
-    alias_method :delete_file, :nil
-    alias_method :file_exist?, :nil
-    alias_method :file_mtime, :nil
-    alias_method :file_size, :nil
-    alias_method :list_files, :nil
+    alias read_file nil
+    alias create_file nil
+    alias update_file nil
+    alias delete_file nil
+    alias file_exist? nil
+    alias file_mtime nil
+    alias file_size nil
+    alias list_files nil
   end
 end
