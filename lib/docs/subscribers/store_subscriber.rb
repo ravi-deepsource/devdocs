@@ -2,7 +2,7 @@
 
 module Docs
   class StoreSubscriber < Subscriber
-    self.namespace = 'store'
+    self.namespace = "store"
 
     def create(event)
       log "Create: #{format_path event.payload[:path]}"

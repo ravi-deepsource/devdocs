@@ -13,10 +13,10 @@ module Docs
     end
 
     def update_links
-      css('a').each do |link|
+      css("a").each do |link|
         next if context[:skip_link].is_a?(Proc) && context[:skip_link].call(link)
-        next unless url = to_internal_url(link['href'])
-        link['href'] = internal_path_to(url)
+        next unless url = to_internal_url(link["href"])
+        link["href"] = internal_path_to(url)
         yield url if block_given?
       end
     end
@@ -58,28 +58,28 @@ module Docs
     def normalize_subpath(path)
       case context[:trailing_slash]
       when true
-        path << '/' unless path.end_with?('/')
+        path << "/" unless path.end_with?("/")
       when false
-        path.slice!(-1) if path.end_with?('/')
+        path.slice!(-1) if path.end_with?("/")
       end
     end
 
     def skip_subpath?(path)
       if context[:only] || context[:only_patterns]
         return true unless context[:only].try(:any?) { |value| path.casecmp(value) == 0 } ||
-                           context[:only_patterns].try(:any?) { |value| path =~ value }
+          context[:only_patterns].try(:any?) { |value| path =~ value }
       end
 
       if context[:skip] || context[:skip_patterns]
         return true if context[:skip].try(:any?) { |value| path.casecmp(value) == 0 } ||
-                       context[:skip_patterns].try(:any?) { |value| path =~ value }
+          context[:skip_patterns].try(:any?) { |value| path =~ value }
       end
 
       false
     end
 
     def normalize_url(url, subpath)
-      url.merge! path: base_url.path + subpath
+      url[:path] = base_url.path + subpath
       url.normalize!
     end
 
@@ -91,7 +91,7 @@ module Docs
     end
 
     def index_url
-      @index_url ||= base_url.merge path: File.join(base_url.path, '')
+      @index_url ||= base_url.merge path: File.join(base_url.path, "")
     end
 
     def effective_url

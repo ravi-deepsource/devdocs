@@ -55,11 +55,11 @@ module Docs
     end
 
     def slug
-      @slug ||= subpath.sub(/\A\//, '').remove(/\.html\z/)
+      @slug ||= subpath.delete_prefix("/").remove(/\.html\z/)
     end
 
     def root_page?
-      subpath.blank? || subpath == '/' || subpath == root_path
+      subpath.blank? || subpath == "/" || subpath == root_path
     end
 
     def initial_page?
@@ -69,10 +69,10 @@ module Docs
     SCHEME_RGX = /\A[^:\/?#]+:/
 
     def fragment_url_string?(str)
-      str[0] == '#'
+      str[0] == "#"
     end
 
-    DATA_URL = 'data:'.freeze
+    DATA_URL = "data:"
 
     def data_url_string?(str)
       str.start_with?(DATA_URL)
@@ -87,13 +87,13 @@ module Docs
     end
 
     def parse_html(html)
-      warn "#{self.class.name} is re-parsing the document" unless ENV['RACK_ENV'] == 'test'
+      warn "#{self.class.name} is re-parsing the document" unless ENV["RACK_ENV"] == "test"
       super
     end
 
     def clean_path(path)
-      path = path.gsub %r{[!;:]}, '-'
-      path = path.gsub %r{\+}, '_plus_'
+      path = path.gsub %r{[!;:]}, "-"
+      path = path.gsub %r{\+}, "_plus_"
       path
     end
   end

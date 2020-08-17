@@ -1,8 +1,8 @@
-require 'yajl/json_gem'
+require "yajl/json_gem"
 
 module Docs
   class Manifest
-    FILENAME = 'docs.json'
+    FILENAME = "docs.json"
 
     def initialize(store, docs)
       @store = store

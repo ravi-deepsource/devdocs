@@ -13,11 +13,11 @@ module Docs
     end
 
     def mime_type
-      headers['Content-Type'] || 'text/plain'
+      headers["Content-Type"] || "text/plain"
     end
 
     def html?
-      mime_type.include? 'html'
+      mime_type.include? "html"
     end
 
     def url

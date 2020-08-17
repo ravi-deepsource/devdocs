@@ -1,9 +1,9 @@
-require 'test_helper'
-require 'docs'
+require "test_helper"
+require "docs"
 
 class DocsRequestTest < MiniTest::Spec
   let :url do
-    'http://example.com'
+    "http://example.com"
   end
 
   def request(url = self.url, options = {})
@@ -37,7 +37,7 @@ class DocsRequestTest < MiniTest::Spec
 
   describe ".new" do
     it "accepts a Docs::URL" do
-      url = Docs::URL.parse 'http://example.com'
+      url = Docs::URL.parse "http://example.com"
       assert_equal url.to_s, request(url).base_url
     end
 
@@ -53,7 +53,7 @@ class DocsRequestTest < MiniTest::Spec
     it "instruments 'response'" do
       req = request.tap(&:run)
       assert req.last_instrumentation
-      assert_equal 'response.request', req.last_instrumentation[:event]
+      assert_equal "response.request", req.last_instrumentation[:event]
       assert_equal url, req.last_instrumentation[:payload][:url]
       assert_equal response, req.last_instrumentation[:payload][:response]
     end

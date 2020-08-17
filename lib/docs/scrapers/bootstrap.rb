@@ -1,9 +1,9 @@
 module Docs
   class Bootstrap < UrlScraper
-    self.type = 'bootstrap'
+    self.type = "bootstrap"
     self.links = {
-      home: 'https://getbootstrap.com/',
-      code: 'https://github.com/twbs/bootstrap'
+      home: "https://getbootstrap.com/",
+      code: "https://github.com/twbs/bootstrap"
     }
 
     options[:trailing_slash] = true
@@ -16,29 +16,29 @@ module Docs
       Documentation licensed under the Creative Commons Attribution License v3.0.
     HTML
 
-    version '4' do
-      self.release = '4.4.1'
-      self.base_url = 'https://getbootstrap.com/docs/4.4/'
-      self.root_path = 'getting-started/introduction/'
+    version "4" do
+      self.release = "4.4.1"
+      self.base_url = "https://getbootstrap.com/docs/4.4/"
+      self.root_path = "getting-started/introduction/"
 
-      html_filters.push 'bootstrap/entries_v4', 'bootstrap/clean_html_v4'
+      html_filters.push "bootstrap/entries_v4", "bootstrap/clean_html_v4"
 
       options[:only_patterns] = [/\Agetting-started\//, /\Alayout\//, /\Acontent\//, /\Acomponents\//, /\Autilities\/.+/, /\Amigration\//]
     end
 
-    version '3' do
-      self.release = '3.4.1'
-      self.base_url = 'https://getbootstrap.com/docs/3.4/'
-      self.root_path = 'getting-started/'
+    version "3" do
+      self.release = "3.4.1"
+      self.base_url = "https://getbootstrap.com/docs/3.4/"
+      self.root_path = "getting-started/"
 
-      html_filters.push 'bootstrap/entries_v3', 'bootstrap/clean_html_v3'
+      html_filters.push "bootstrap/entries_v3", "bootstrap/clean_html_v3"
 
-      options[:only] = %w(getting-started/ css/ components/ javascript/)
+      options[:only] = %w[getting-started/ css/ components/ javascript/]
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://getbootstrap.com/', opts)
-      doc.at_css('#bd-versions').content.strip[1..-1]
+      doc = fetch_doc("https://getbootstrap.com/", opts)
+      doc.at_css("#bd-versions").content.strip[1..-1]
     end
   end
 end
