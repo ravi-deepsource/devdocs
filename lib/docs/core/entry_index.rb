@@ -1,4 +1,4 @@
-require 'yajl/json_gem'
+require "yajl/json_gem"
 
 module Docs
   class EntryIndex
@@ -22,14 +22,14 @@ module Docs
       @entries.empty?
     end
 
-    alias_method :blank?, :empty?
+    alias blank? empty?
 
     def length
       @entries.length
     end
 
     def as_json
-      { entries: entries_as_json, types: types_as_json }
+      {entries: entries_as_json, types: types_as_json}
     end
 
     def to_json

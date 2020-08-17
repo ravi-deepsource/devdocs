@@ -2,7 +2,7 @@
 
 module Docs
   class ScraperSubscriber < Subscriber
-    self.namespace = 'scraper'
+    self.namespace = "scraper"
 
     def queued(event)
       event.payload[:urls].each do |url|
@@ -10,7 +10,7 @@ module Docs
       end
     end
 
-    alias_method :running, :queued
+    alias running queued
 
     def ignore_response(event)
       msg = "Ignore:  #{format_url event.payload[:response].url}"

@@ -3,22 +3,22 @@ module Docs
     class CleanHtmlFilter < Filter
       def call
         if root_page?
-          at_css('h1').content = 'Godot Engine'
-          at_css('.admonition.tip').remove
+          at_css("h1").content = "Godot Engine"
+          at_css(".admonition.tip").remove
         end
 
-        css('ul[id].simple li:first-child:last-child').each do |node|
-          heading = Nokogiri::XML::Node.new 'h3', doc
-          heading['id'] = node.parent['id']
+        css("ul[id].simple li:first-child:last-child").each do |node|
+          heading = Nokogiri::XML::Node.new "h3", doc
+          heading["id"] = node.parent["id"]
           heading.children = node.children
           node.parent.before(heading).remove
         end
 
-        css('h3 strong').each do |node|
+        css("h3 strong").each do |node|
           node.before(node.children).remove
         end
 
-        css('a.reference').remove_attr('class')
+        css("a.reference").remove_attr("class")
 
         doc
       end

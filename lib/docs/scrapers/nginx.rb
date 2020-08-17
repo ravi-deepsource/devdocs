@@ -1,22 +1,23 @@
 module Docs
   class Nginx < UrlScraper
-    self.name = 'nginx'
-    self.type = 'nginx'
-    self.release = '1.17.2'
-    self.base_url = 'https://nginx.org/en/docs/'
+    self.name = "nginx"
+    self.type = "nginx"
+    self.release = "1.17.2"
+    self.base_url = "https://nginx.org/en/docs/"
     self.links = {
-      home: 'https://nginx.org/',
-      code: 'https://hg.nginx.org/nginx'
+      home: "https://nginx.org/",
+      code: "https://hg.nginx.org/nginx"
     }
 
-    html_filters.push 'nginx/clean_html', 'nginx/entries'
+    html_filters.push "nginx/clean_html", "nginx/entries"
 
-    options[:container] = '#content'
+    options[:container] = "#content"
 
-    options[:skip] = %w(
+    options[:skip] = %w[
       contributing_changes.html
       dirindex.html
-      varindex.html)
+      varindex.html
+    ]
 
     options[:skip_patterns] = [/\/faq\//]
 
@@ -27,8 +28,8 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://nginx.org/en/download.html', opts)
-      table = doc.at_css('#content > table').inner_html
+      doc = fetch_doc("https://nginx.org/en/download.html", opts)
+      table = doc.at_css("#content > table").inner_html
       table.scan(/nginx-([0-9.]+)</)[0][0]
     end
   end

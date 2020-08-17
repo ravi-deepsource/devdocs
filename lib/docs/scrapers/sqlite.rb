@@ -1,22 +1,22 @@
 module Docs
   class Sqlite < FileScraper
-    self.name = 'SQLite'
-    self.type = 'sqlite'
-    self.release = '3.30.1'
-    self.base_url = 'https://sqlite.org/'
-    self.root_path = 'docs.html'
-    self.initial_paths = %w(keyword_index.html)
+    self.name = "SQLite"
+    self.type = "sqlite"
+    self.release = "3.30.1"
+    self.base_url = "https://sqlite.org/"
+    self.root_path = "docs.html"
+    self.initial_paths = %w[keyword_index.html]
     self.links = {
-      home: 'https://sqlite.org/',
-      code: 'https://www.sqlite.org/src/'
+      home: "https://sqlite.org/",
+      code: "https://www.sqlite.org/src/"
     }
 
-    html_filters.insert_before 'clean_html', 'sqlite/clean_js_tables'
-    html_filters.push 'sqlite/entries', 'sqlite/clean_html'
+    html_filters.insert_before "clean_html", "sqlite/clean_js_tables"
+    html_filters.push "sqlite/entries", "sqlite/clean_html"
 
     options[:only_patterns] = [/\.html\z/]
     options[:skip_patterns] = [/releaselog/, /consortium/]
-    options[:skip] = %w(
+    options[:skip] = %w[
       index.html
       about.html
       download.html
@@ -38,13 +38,13 @@ module Docs
       session/intro.html
       syntax.html
       src/doc/trunk/doc/lemon.html
-    )
+    ]
 
-    options[:attribution] = 'SQLite is in the Public Domain.'
+    options[:attribution] = "SQLite is in the Public Domain."
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://sqlite.org/chronology.html', opts)
-      doc.at_css('#chrontab > tbody > tr > td:last-child > a').content
+      doc = fetch_doc("https://sqlite.org/chronology.html", opts)
+      doc.at_css("#chrontab > tbody > tr > td:last-child > a").content
     end
 
     private
