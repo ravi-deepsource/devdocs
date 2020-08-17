@@ -2,12 +2,12 @@ module Docs
   class Openjdk < FileScraper
     # Downloaded from packages.debian.org/sid/openjdk-8-doc
     # Extracting subdirectory /usr/share/doc/openjdk-8-jre-headless/api
-    self.name = 'OpenJDK'
-    self.type = 'openjdk'
-    self.root_path = 'overview-summary.html'
+    self.name = "OpenJDK"
+    self.type = "openjdk"
+    self.root_path = "overview-summary.html"
 
-    html_filters.insert_after 'internal_urls', 'openjdk/clean_urls'
-    html_filters.push 'openjdk/entries', 'openjdk/clean_html'
+    html_filters.insert_after "internal_urls", "openjdk/clean_urls"
+    html_filters.push "openjdk/entries", "openjdk/clean_html"
 
     options[:skip_patterns] = [
       /compact[123]-/,
@@ -15,7 +15,8 @@ module Docs
       /package-tree\.html/,
       /package-use\.html/,
       /class-use\//,
-      /doc-files\//]
+      /doc-files\//
+    ]
 
     options[:attribution] = <<-HTML
       &copy; 1993&ndash;2017, Oracle and/or its affiliates. All rights reserved.<br>
@@ -25,8 +26,8 @@ module Docs
       Java and OpenJDK are trademarks or registered trademarks of Oracle and/or its affiliates.
     HTML
 
-    version '8' do
-      self.release = '8'
+    version "8" do
+      self.release = "8"
 
       options[:only_patterns] = [
         /\Ajava\/beans\//,
@@ -50,19 +51,21 @@ module Docs
         /\Ajavax\/script\//,
         /\Ajavax\/security\//,
         /\Ajavax\/sound\//,
-        /\Ajavax\/tools\//]
+        /\Ajavax\/tools\//
+      ]
     end
 
-    version '8 GUI' do
-      self.release = '8'
+    version "8 GUI" do
+      self.release = "8"
 
       options[:only_patterns] = [
         /\Ajava\/awt\//,
-        /\Ajavax\/swing\//]
+        /\Ajavax\/swing\//
+      ]
     end
 
-    version '8 Web' do
-      self.release = '8'
+    version "8 Web" do
+      self.release = "8"
 
       options[:only_patterns] = [
         /\Ajava\/applet\//,
@@ -79,12 +82,15 @@ module Docs
         /\Aorg\/ietf\//,
         /\Aorg\/omg\//,
         /\Aorg\/w3c\//,
-        /\Aorg\/xml\//]
+        /\Aorg\/xml\//
+      ]
     end
 
     # Monkey patch to properly read HTML files encoded in ISO-8859-1
     def read_file(path)
-      File.read(path).force_encoding('iso-8859-1').encode('utf-8') rescue nil
+      File.read(path).force_encoding("iso-8859-1").encode("utf-8")
+    rescue
+      nil
     end
 
     def get_latest_version(opts)
@@ -96,7 +102,7 @@ module Docs
         current_attempt += 1
 
         doc = fetch_doc("https://packages.debian.org/sid/openjdk-#{current_attempt}-doc", opts)
-        if doc.at_css('.perror').nil?
+        if doc.at_css(".perror").nil?
           latest_version = current_attempt
           attempts = 0
         else

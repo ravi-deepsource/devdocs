@@ -1,13 +1,13 @@
-require 'test_helper'
-require 'docs'
+require "test_helper"
+require "docs"
 
 class InnerHtmlFilterTest < MiniTest::Spec
   include FilterTestHelper
   self.filter_class = Docs::InnerHtmlFilter
 
   it "returns the document as a string" do
-    @body = Nokogiri::HTML.fragment('<p>Test</p>')
-    assert_equal '<p>Test</p>', filter_output
+    @body = Nokogiri::HTML.fragment("<p>Test</p>")
+    assert_equal "<p>Test</p>", filter_output
   end
 
   it "returns a valid string" do

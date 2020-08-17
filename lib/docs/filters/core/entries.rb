@@ -32,7 +32,7 @@ module Docs
     end
 
     def get_name
-      slug.to_s.gsub('_', ' ').gsub('/', '.').squish!
+      slug.to_s.tr("_", " ").tr("/", ".").squish!
     end
 
     def type
@@ -56,7 +56,7 @@ module Docs
 
     def build_entry(name, frag = nil, type = nil)
       type ||= self.type
-      path = frag ? (frag.include?('#') ? frag : "#{self.path}##{frag}") : self.path
+      path = frag ? (frag.include?("#") ? frag : "#{self.path}##{frag}") : self.path
       Entry.new(name, path, type)
     end
   end

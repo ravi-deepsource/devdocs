@@ -3,16 +3,16 @@ module Docs
     prepend FixInternalUrlsBehavior
     prepend FixRedirectionsBehavior
 
-    self.name = 'DOM'
-    self.base_url = 'https://developer.mozilla.org/en-US/docs/Web/API'
+    self.name = "DOM"
+    self.base_url = "https://developer.mozilla.org/en-US/docs/Web/API"
 
-    html_filters.push 'dom/clean_html', 'dom/entries', 'title'
+    html_filters.push "dom/clean_html", "dom/entries", "title"
 
-    options[:mdn_tag] = 'XSLT_Reference'
+    options[:mdn_tag] = "XSLT_Reference"
 
-    options[:root_title] = 'DOM'
+    options[:root_title] = "DOM"
 
-    options[:skip] = %w(
+    options[:skip] = %w[
       /Reference
       /Index
       /Document_Object_Model
@@ -36,7 +36,8 @@ module Docs
       /window/messageManager
       /window/updateCommands
       /window/pkcs11
-      /OES_texture_float)
+      /OES_texture_float
+    ]
 
     options[:skip_patterns] = [
       /NS/,
@@ -67,25 +68,26 @@ module Docs
       /\A\/Apps/,
       /\A\/Contact/,
       /\A\/L10n/,
-      /\A\/Permission/]
+      /\A\/Permission/
+    ]
 
     options[:fix_urls] = ->(url) do
-      return if url.include?('_') || url.include?('?')
-      url.sub! 'https://developer.mozilla.org/en-US/docs/DOM/', "#{Dom.base_url}/"
-      url.sub! 'https://developer.mozilla.org/en/DOM/',         "#{Dom.base_url}/"
-      url.sub! 'https://developer.mozilla.org/Web/API/',        "#{Dom.base_url}/"
-      url.sub! "#{Dom.base_url}/Console",                       "#{Dom.base_url}/console"
-      url.sub! "#{Dom.base_url}/Document\/",                    "#{Dom.base_url}/document\/"
-      url.sub! "#{Dom.base_url}/Element",                       "#{Dom.base_url}/element"
-      url.sub! "#{Dom.base_url}/History",                       "#{Dom.base_url}/history"
-      url.sub! "#{Dom.base_url}/Location",                      "#{Dom.base_url}/location"
-      url.sub! "#{Dom.base_url}/Navigator",                     "#{Dom.base_url}/navigator"
-      url.sub! "#{Dom.base_url}/Screen",                        "#{Dom.base_url}/screen"
-      url.sub! "#{Dom.base_url}/Window\/",                      "#{Dom.base_url}/window\/"
-      url.sub! "#{Dom.base_url}/notification",                  "#{Dom.base_url}/Notification"
-      url.sub! "#{Dom.base_url}/range",                         "#{Dom.base_url}/Range"
-      url.sub! "#{Dom.base_url}/event",                         "#{Dom.base_url}/Event"
-      url.sub! '/en/DOM/Manipulating_the_browser_history',      "/en-US/docs/Web/API/History_API"
+      return if url.include?("_") || url.include?("?")
+      url.sub! "https://developer.mozilla.org/en-US/docs/DOM/", "#{Dom.base_url}/"
+      url.sub! "https://developer.mozilla.org/en/DOM/", "#{Dom.base_url}/"
+      url.sub! "https://developer.mozilla.org/Web/API/", "#{Dom.base_url}/"
+      url.sub! "#{Dom.base_url}/Console", "#{Dom.base_url}/console"
+      url.sub! "#{Dom.base_url}/Document\/", "#{Dom.base_url}/document\/"
+      url.sub! "#{Dom.base_url}/Element", "#{Dom.base_url}/element"
+      url.sub! "#{Dom.base_url}/History", "#{Dom.base_url}/history"
+      url.sub! "#{Dom.base_url}/Location", "#{Dom.base_url}/location"
+      url.sub! "#{Dom.base_url}/Navigator", "#{Dom.base_url}/navigator"
+      url.sub! "#{Dom.base_url}/Screen", "#{Dom.base_url}/screen"
+      url.sub! "#{Dom.base_url}/Window\/", "#{Dom.base_url}/window\/"
+      url.sub! "#{Dom.base_url}/notification", "#{Dom.base_url}/Notification"
+      url.sub! "#{Dom.base_url}/range", "#{Dom.base_url}/Range"
+      url.sub! "#{Dom.base_url}/event", "#{Dom.base_url}/Event"
+      url.sub! "/en/DOM/Manipulating_the_browser_history", "/en-US/docs/Web/API/History_API"
       url
     end
   end
