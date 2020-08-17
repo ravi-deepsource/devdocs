@@ -17,7 +17,7 @@ module Docs
       ].freeze
 
       def get_name
-        at_css('h1.article-title').content.strip
+        at_css("h1.article-title").content.strip
       end
 
       def get_type
@@ -25,7 +25,7 @@ module Docs
 
         SECTIONS.each do |section|
           if path.match?("/#{section}/")
-            return section.split('-').map(&:capitalize).join(' ')
+            return section.split("-").map(&:capitalize).join(" ")
           end
         end
       end

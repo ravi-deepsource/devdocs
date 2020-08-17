@@ -1,15 +1,15 @@
 module Docs
   class Grunt < UrlScraper
-    self.name = 'Grunt'
-    self.type = 'simple'
-    self.release = '1.0.1'
-    self.base_url = 'https://gruntjs.com/'
-    self.root_path = 'getting-started'
-    self.initial_paths = %w(api/grunt)
+    self.name = "Grunt"
+    self.type = "simple"
+    self.release = "1.0.1"
+    self.base_url = "https://gruntjs.com/"
+    self.root_path = "getting-started"
+    self.initial_paths = %w[api/grunt]
 
-    html_filters.push 'grunt/clean_html', 'grunt/entries'
+    html_filters.push "grunt/clean_html", "grunt/entries"
 
-    options[:only] = %w(
+    options[:only] = %w[
       configuring-tasks
       sample-gruntfile
       creating-tasks
@@ -17,10 +17,10 @@ module Docs
       using-the-cli
       installing-grunt
       project-scaffolding
-    )
+    ]
     options[:only_patterns] = [/\Aapi\//, /\Aupgrading-/]
 
-    options[:container] = '.container > .row-fluid'
+    options[:container] = ".container > .row-fluid"
 
     options[:attribution] = <<-HTML
       &copy; GruntJS Team<br>
@@ -28,7 +28,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      get_npm_version('grunt-cli', opts)
+      get_npm_version("grunt-cli", opts)
     end
   end
 end

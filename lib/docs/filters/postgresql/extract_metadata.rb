@@ -9,7 +9,7 @@ module Docs
 
       def extract_up_path
         if node = at_css('.navheader a[accesskey="u"], .navheader a[accesskey="U"]')
-          result[:pg_up_path] = node['href']
+          result[:pg_up_path] = node["href"]
         end
       end
 

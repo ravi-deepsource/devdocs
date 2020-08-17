@@ -10,8 +10,8 @@ module Docs
       end
 
       def additional_entries
-        css('h2, h3').to_a.map do |node|
-          [node.content.strip, node['id'], root_page? ? 'Manual' : nil]
+        css("h2, h3").to_a.map do |node|
+          [node.content.strip, node["id"], root_page? ? "Manual" : nil]
         end
       end
     end

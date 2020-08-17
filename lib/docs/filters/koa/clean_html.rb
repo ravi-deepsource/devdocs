@@ -4,10 +4,10 @@ module Docs
   class Koa
     class CleanHtmlFilter < Filter
       def call
-        fix_homepage if slug.start_with? 'api/index'
+        fix_homepage if slug.start_with? "api/index"
 
-        css('[data-language=shell]').each do |node|
-          node['data-language'] = 'bash'
+        css("[data-language=shell]").each do |node|
+          node["data-language"] = "bash"
         end
 
         doc
@@ -15,9 +15,9 @@ module Docs
 
       def fix_homepage
         # Shrink the headers
-        for n in (1..5).to_a.reverse
+        (1..5).to_a.reverse_each do |n|
           css("h#{n}").each do |header|
-            header.name = "h#{n+1}"
+            header.name = "h#{n + 1}"
           end
         end
 

@@ -2,30 +2,30 @@ module Docs
   class Chef
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        name = at_css('.body h1').content
+        name = at_css(".body h1").content
         name.remove! "\u{00b6}"
-        name.remove! 'About the '
-        name.remove! 'About '
+        name.remove! "About the "
+        name.remove! "About "
         name
       end
 
       CLIENT_TYPE_BY_SLUG_END_WITH = {
-        'knife_common_options'               => 'Workflow Tools',
-        'knife_using'                        => 'Workflow Tools',
-        'resource_common'                    => 'Cookbooks',
-        'config_rb_knife_optional_settings'  => 'Workflow Tools',
-        'knife_index_rebuild'                => 'Workflow Tools',
-        'handlers'                           => 'Extend Chef',
-        'dsl_recipe'                         => 'Extend Chef',
-        'resource'                           => 'Extend Chef'
+        "knife_common_options" => "Workflow Tools",
+        "knife_using" => "Workflow Tools",
+        "resource_common" => "Cookbooks",
+        "config_rb_knife_optional_settings" => "Workflow Tools",
+        "knife_index_rebuild" => "Workflow Tools",
+        "handlers" => "Extend Chef",
+        "dsl_recipe" => "Extend Chef",
+        "resource" => "Extend Chef"
       }
 
       SERVER_TYPE_BY_SLUG_END_WITH = {
-        'auth'                               => 'Theory & Concepts',
-        'install_server'                     => 'Setup & Config',
-        'install_server_pre'                 => 'Setup & Config',
-        'config_rb_server_optional_settings' => 'Manage the Server',
-        'ctl_chef_server'                    => 'Manage the Server'
+        "auth" => "Theory & Concepts",
+        "install_server" => "Setup & Config",
+        "install_server_pre" => "Setup & Config",
+        "config_rb_server_optional_settings" => "Manage the Server",
+        "ctl_chef_server" => "Manage the Server"
       }
 
       def get_type
@@ -40,12 +40,12 @@ module Docs
         end
 
         path = nav_path
-        path.delete('Reference')
+        path.delete("Reference")
         path = path[0..0]
-        path.unshift('Chef Server') if server_page?
+        path.unshift("Chef Server") if server_page?
 
-        type = path.join(' / ')
-        type.sub 'Cookbooks / Cookbook', 'Cookbooks /'
+        type = path.join(" / ")
+        type.sub "Cookbooks / Cookbook", "Cookbooks /"
         type
       end
 
@@ -54,10 +54,10 @@ module Docs
       end
 
       def nav_path
-        node = at_css(".nav-docs a[href='#{result[:path].split('/').last}']")
+        node = at_css(".nav-docs a[href='#{result[:path].split("/").last}']")
         path = []
-        until node['class'] && node['class'].include?('main-item')
-          path.unshift(node.first_element_child.content.strip) if node['class'] && node['class'].include?('has-sub-items')
+        until node["class"]&.include?("main-item")
+          path.unshift(node.first_element_child.content.strip) if node["class"]&.include?("has-sub-items")
           node = node.parent
         end
         path.unshift(node.first_element_child.content.strip)

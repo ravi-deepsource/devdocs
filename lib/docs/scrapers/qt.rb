@@ -1,17 +1,17 @@
 module Docs
   class Qt < UrlScraper
-    self.name = 'Qt'
-    self.type = 'qt'
-    self.initial_paths = %w(classes.html qmltypes.html)
-    self.root_path = 'index.html'
+    self.name = "Qt"
+    self.type = "qt"
+    self.initial_paths = %w[classes.html qmltypes.html]
+    self.root_path = "index.html"
     self.links = {
-      home: 'https://www.qt.io',
-      code: 'https://code.qt.io/cgit/'
+      home: "https://www.qt.io",
+      code: "https://code.qt.io/cgit/"
     }
 
-    html_filters.push 'qt/entries', 'qt/clean_html'
+    html_filters.push "qt/entries", "qt/clean_html"
 
-    options[:container] = '.main'
+    options[:container] = ".main"
     options[:max_image_size] = 156_000
     options[:skip_patterns] = [
       # License, copyright attributions
@@ -48,7 +48,7 @@ module Docs
       /^qopenglfunctions/,
 
       # Tooling
-      /^(qt)?(linguist|assistant|qdbusviewer)/,
+      /^(qt)?(linguist|assistant|qdbusviewer)/
     ]
 
     options[:skip] = [
@@ -95,7 +95,7 @@ module Docs
 
       # Other
       "ecmascript.html",
-      "qtremoteobjects-interaction.html",
+      "qtremoteobjects-interaction.html"
     ]
 
     options[:attribution] = <<-HTML
@@ -103,34 +103,34 @@ module Docs
       Licensed under the GNU Free Documentation License, Version 1.3.
     HTML
 
-    version '5.13' do
-      self.release = '5.13'
-      self.base_url = 'https://doc.qt.io/qt-5.13/'
+    version "5.13" do
+      self.release = "5.13"
+      self.base_url = "https://doc.qt.io/qt-5.13/"
     end
 
-    version '5.12' do
-      self.release = '5.12'
-      self.base_url = 'https://doc.qt.io/qt-5.12/'
+    version "5.12" do
+      self.release = "5.12"
+      self.base_url = "https://doc.qt.io/qt-5.12/"
     end
 
-    version '5.11' do
-      self.release = '5.11'
-      self.base_url = 'https://doc.qt.io/archives/qt-5.11/'
+    version "5.11" do
+      self.release = "5.11"
+      self.base_url = "https://doc.qt.io/archives/qt-5.11/"
     end
 
-    version '5.9' do
-      self.release = '5.9'
-      self.base_url = 'https://doc.qt.io/qt-5.9/'
+    version "5.9" do
+      self.release = "5.9"
+      self.base_url = "https://doc.qt.io/qt-5.9/"
     end
 
-    version '5.6' do
-      self.release = '5.6'
-      self.base_url = 'https://doc.qt.io/archives/qt-5.6/'
+    version "5.6" do
+      self.release = "5.6"
+      self.base_url = "https://doc.qt.io/archives/qt-5.6/"
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://doc.qt.io/qt-5/index.html', opts)
-      doc.at_css('.mainContent h1.title').content.sub(/Qt /, '')
+      doc = fetch_doc("https://doc.qt.io/qt-5/index.html", opts)
+      doc.at_css(".mainContent h1.title").content.sub(/Qt /, "")
     end
   end
 end

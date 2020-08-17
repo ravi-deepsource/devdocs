@@ -1,19 +1,19 @@
 module Docs
   class Less < UrlScraper
-    self.type = 'simple'
-    self.release = '2.7.2'
-    self.base_url = 'http://lesscss.org'
-    self.root_path = '/features'
-    self.initial_paths = %w(/functions)
+    self.type = "simple"
+    self.release = "2.7.2"
+    self.base_url = "http://lesscss.org"
+    self.root_path = "/features"
+    self.initial_paths = %w[/functions]
     self.links = {
-      home: 'http://lesscss.org/',
-      code: 'https://github.com/less/less.js'
+      home: "http://lesscss.org/",
+      code: "https://github.com/less/less.js"
     }
 
-    html_filters.push 'less/clean_html', 'less/entries', 'title'
+    html_filters.push "less/clean_html", "less/entries", "title"
 
-    options[:title] = 'Less'
-    options[:container] = 'div[role=main]'
+    options[:title] = "Less"
+    options[:container] = "div[role=main]"
     options[:follow_links] = false
     options[:trailing_slash] = false
 
@@ -23,8 +23,8 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      doc = fetch_doc('http://lesscss.org/features/', opts)
-      label = doc.at_css('.footer-links > li').content
+      doc = fetch_doc("http://lesscss.org/features/", opts)
+      label = doc.at_css(".footer-links > li").content
       label.scan(/([0-9.]+)/)[0][0]
     end
   end

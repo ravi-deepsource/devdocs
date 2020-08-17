@@ -10,14 +10,14 @@ module Docs
     end
 
     def push(*names)
-      @filters.push *filter_const(names)
+      @filters.push(*filter_const(names))
     end
 
     def insert(index, *names)
       @filters.insert assert_index(index), *filter_const(names)
     end
 
-    alias_method :insert_before, :insert
+    alias insert_before insert
 
     def insert_after(index, *names)
       insert assert_index(index) + 1, *names
@@ -43,7 +43,7 @@ module Docs
 
     def filter_const(name)
       if name.is_a? Array
-        name.map &method(:filter_const)
+        name.map(&method(:filter_const))
       else
         Docs.const_get "#{name}_filter".camelize
       end
