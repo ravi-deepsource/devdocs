@@ -5,14 +5,14 @@ module Docs
         entries = []
         type = nil
 
-        css('*').each do |node|
-          if node.name == 'h1'
+        css("*").each do |node|
+          if node.name == "h1"
             name = node.content
-            type = node.content.split('.').first
-            entries << [name, node['id'], type]
-          elsif node.name == 'h3'
+            type = node.content.split(".").first
+            entries << [name, node["id"], type]
+          elsif node.name == "h3"
             name = node.content
-            entries << [name, node['id'], type]
+            entries << [name, node["id"], type]
           end
         end
 

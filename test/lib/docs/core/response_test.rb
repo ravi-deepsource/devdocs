@@ -1,5 +1,5 @@
-require 'test_helper'
-require 'docs'
+require "test_helper"
+require "docs"
 
 class DocsResponseTest < MiniTest::Spec
   let :response do
@@ -53,46 +53,46 @@ class DocsResponseTest < MiniTest::Spec
 
   describe "#blank?" do
     it "returns true when the body is blank" do
-      options.body = ' '
+      options.body = " "
       assert response.blank?
     end
 
     it "returns false when the body isn't blank" do
-      options.body = 'body'
+      options.body = "body"
       refute response.blank?
     end
   end
 
   describe "#mime_type" do
     it "returns the content type" do
-      options.headers['Content-Type'] = 'type'
-      assert_equal 'type', response.mime_type
+      options.headers["Content-Type"] = "type"
+      assert_equal "type", response.mime_type
     end
 
     it "defaults to text/plain" do
-      assert_equal 'text/plain', response.mime_type
+      assert_equal "text/plain", response.mime_type
     end
   end
 
   describe "#html?" do
     it "returns true when the content type is 'text/html'" do
-      options.headers['Content-Type'] = 'text/html'
+      options.headers["Content-Type"] = "text/html"
       assert response.html?
     end
 
     it "returns true when the content type is 'application/xhtml'" do
-      options.headers['Content-Type'] = 'application/xhtml'
+      options.headers["Content-Type"] = "application/xhtml"
       assert response.html?
     end
 
     it "returns false when the content type is 'text/plain'" do
-      options.headers['Content-Type'] = 'text/plain'
+      options.headers["Content-Type"] = "text/plain"
       refute response.html?
     end
   end
 
   describe "#url" do
-    before { request.base_url = 'http://example.com' }
+    before { request.base_url = "http://example.com" }
 
     it "returns a Docs::URL" do
       assert_instance_of Docs::URL, response.url
@@ -105,13 +105,13 @@ class DocsResponseTest < MiniTest::Spec
 
   describe "#path" do
     it "returns the #url's path" do
-      request.base_url = 'http://example.com/path'
-      assert_equal '/path', response.path
+      request.base_url = "http://example.com/path"
+      assert_equal "/path", response.path
     end
   end
 
   describe "#effective_url" do
-    before { options.effective_url = 'http://example.com' }
+    before { options.effective_url = "http://example.com" }
 
     it "returns a Docs::URL" do
       assert_instance_of Docs::URL, response.effective_url
@@ -124,8 +124,8 @@ class DocsResponseTest < MiniTest::Spec
 
   describe "#effective_path" do
     it "returns the #effective_url's path" do
-      options.effective_url = 'http://example.com/path'
-      assert_equal '/path', response.effective_path
+      options.effective_url = "http://example.com/path"
+      assert_equal "/path", response.effective_path
     end
   end
 end

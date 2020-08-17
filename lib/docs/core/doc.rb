@@ -1,8 +1,8 @@
 module Docs
   class Doc
-    INDEX_FILENAME = 'index.json'
-    DB_FILENAME = 'db.json'
-    META_FILENAME = 'meta.json'
+    INDEX_FILENAME = "index.json"
+    DB_FILENAME = "db.json"
+    META_FILENAME = "meta.json"
 
     class << self
       include Instrumentable
@@ -49,16 +49,16 @@ module Docs
       end
 
       def slug
-        slug = @slug || default_slug || raise('slug is required')
+        slug = @slug || default_slug || raise("slug is required")
         version? ? "#{slug}~#{version_slug}" : slug
       end
 
       def version_slug
         return if version.blank?
         slug = version.downcase
-        slug.gsub! '+', 'p'
-        slug.gsub! '#', 's'
-        slug.gsub! %r{[^a-z0-9\_\.]}, '_'
+        slug.tr! "+", "p"
+        slug.tr! "#", "s"
+        slug.gsub! %r{[^a-z0-9_.]}, "_"
         slug
       end
 
@@ -79,7 +79,7 @@ module Docs
       end
 
       def as_json
-        json = { name: name, slug: slug, type: type }
+        json = {name: name, slug: slug, type: type}
         json[:links] = links if links.present?
         json[:version] = version if version.present? || defined?(@version)
         json[:release] = release if release.present?
@@ -88,7 +88,7 @@ module Docs
 
       def store_page(store, id)
         store.open(path) do
-          if page = new.build_page(id) and store_page?(page)
+          if (page = new.build_page(id)) && store_page?(page)
             store.write page[:store_path], page[:output]
             true
           else
@@ -129,7 +129,7 @@ module Docs
       private
 
       def default_slug
-        return if name =~ /[^A-Za-z0-9_]/
+        return if /[^A-Za-z0-9_]/.match?(name)
         name.downcase
       end
 
@@ -138,9 +138,9 @@ module Docs
       end
 
       def store_index(store, filename, index)
-        old_json = store.read(filename) || '{}'
+        old_json = store.read(filename) || "{}"
         new_json = index.to_json
-        instrument "#{filename.remove('.json')}.doc", before: old_json, after: new_json
+        instrument "#{filename.remove(".json")}.doc", before: old_json, after: new_json
         store.write(filename, new_json)
       end
 
@@ -165,13 +165,13 @@ module Docs
     end
 
     def get_scraper_version(opts)
-      if self.class.method_defined?(:options) and !options[:release].nil?
+      if self.class.method_defined?(:options) && !options[:release].nil?
         options[:release]
       else
         # If options[:release] does not exist, we return the Epoch timestamp of when the doc was last modified in DevDocs production
-        json = fetch_json('https://devdocs.io/docs.json', opts)
-        items = json.select {|item| item['name'] == self.class.name}
-        items = items.map {|item| item['mtime']}
+        json = fetch_json("https://devdocs.io/docs.json", opts)
+        items = json.select { |item| item["name"] == self.class.name }
+        items = items.map { |item| item["mtime"] }
         items.max
       end
     end
@@ -201,7 +201,7 @@ module Docs
 
       # Only check the first two parts, the third part is for patch updates
       [0, 1].each do |i|
-        break if i >= scraper_parts.length or i >= latest_parts.length
+        break if (i >= scraper_parts.length) || (i >= latest_parts.length)
         return true if latest_parts[i] > scraper_parts[i]
         return false if latest_parts[i] < scraper_parts[i]
       end
@@ -218,12 +218,12 @@ module Docs
     def fetch(url, opts)
       headers = {}
 
-      if opts.key?(:github_token) and url.start_with?('https://api.github.com/')
-        headers['Authorization'] = "token #{opts[:github_token]}"
+      if opts.key?(:github_token) && url.start_with?("https://api.github.com/")
+        headers["Authorization"] = "token #{opts[:github_token]}"
       end
 
       opts[:logger].debug("Fetching #{url}")
-      response = Request.run(url, { connecttimeout: 15, headers: headers })
+      response = Request.run(url, {connecttimeout: 15, headers: headers})
 
       if response.success?
         response.body
@@ -236,7 +236,7 @@ module Docs
 
     def fetch_doc(url, opts)
       body = fetch(url, opts)
-      Nokogiri::HTML.parse(body, nil, 'UTF-8')
+      Nokogiri::HTML.parse(body, nil, "UTF-8")
     end
 
     def fetch_json(url, opts)
@@ -245,13 +245,13 @@ module Docs
 
     def get_npm_version(package, opts)
       json = fetch_json("https://registry.npmjs.com/#{package}", opts)
-      json['dist-tags']['latest']
+      json["dist-tags"]["latest"]
     end
 
     def get_latest_github_release(owner, repo, opts)
       release = fetch_json("https://api.github.com/repos/#{owner}/#{repo}/releases/latest", opts)
-      tag_name = release['tag_name']
-      tag_name.start_with?('v') ? tag_name[1..-1] : tag_name
+      tag_name = release["tag_name"]
+      tag_name.start_with?("v") ? tag_name[1..-1] : tag_name
     end
 
     def get_github_tags(owner, repo, opts)
@@ -260,12 +260,12 @@ module Docs
 
     def get_github_file_contents(owner, repo, path, opts)
       json = fetch_json("https://api.github.com/repos/#{owner}/#{repo}/contents/#{path}", opts)
-      Base64.decode64(json['content'])
+      Base64.decode64(json["content"])
     end
 
     def get_latest_github_commit_date(owner, repo, opts)
       commits = fetch_json("https://api.github.com/repos/#{owner}/#{repo}/commits", opts)
-      timestamp = commits[0]['commit']['author']['date']
+      timestamp = commits[0]["commit"]["author"]["date"]
       Date.iso8601(timestamp).to_time.to_i
     end
   end

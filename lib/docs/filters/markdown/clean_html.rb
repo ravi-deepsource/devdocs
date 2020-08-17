@@ -2,11 +2,11 @@ module Docs
   class Markdown
     class CleanHtmlFilter < Filter
       def call
-        at_css('h1').content = 'Markdown'
+        at_css("h1").content = "Markdown"
 
-        css('#ProjectSubmenu', 'hr').remove
+        css("#ProjectSubmenu", "hr").remove
 
-        css('pre > code').each do |node|
+        css("pre > code").each do |node|
           node.before(node.children).remove
         end
 
