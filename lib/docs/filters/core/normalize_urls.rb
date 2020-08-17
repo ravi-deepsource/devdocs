@@ -2,7 +2,7 @@
 
 module Docs
   class NormalizeUrlsFilter < Filter
-    ATTRIBUTES = { a: 'href', img: 'src', iframe: 'src' }
+    ATTRIBUTES = {a: "href", img: "src", iframe: "src"}
 
     def call
       ATTRIBUTES.each_pair do |tag, attribute|
@@ -15,13 +15,13 @@ module Docs
       css(tag.to_s).each do |node|
         next unless value = node[attribute]
         next if fragment_url_string?(value) || data_url_string?(value)
-        node[attribute] = normalize_url(value) || (tag == :iframe ? value : '#')
+        node[attribute] = normalize_url(value) || (tag == :iframe ? value : "#")
       end
     end
 
     def normalize_url(str)
       str.strip!
-      str.gsub!(' ', '%20')
+      str.gsub!(" ", "%20")
       str = context[:fix_urls_before_parse].call(str) if context[:fix_urls_before_parse]
       url = to_absolute_url(str)
 
@@ -55,7 +55,7 @@ module Docs
         path = subpath_to(url)
 
         if context[:replace_paths].key?(path)
-          url.path = url.path.sub %r[#{path}\z], context[:replace_paths][path]
+          url.path = url.path.sub %r{#{path}\z}, context[:replace_paths][path]
           return url
         end
       end

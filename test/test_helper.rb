@@ -1,19 +1,19 @@
-ENV['RACK_ENV'] = 'test'
+ENV["RACK_ENV"] = "test"
 
-require 'bundler/setup'
+require "bundler/setup"
 Bundler.require :test
 
-$LOAD_PATH.unshift 'lib'
+$LOAD_PATH.unshift "lib"
 
-require 'minitest/autorun'
-require 'minitest/pride'
-require 'active_support'
-require 'active_support/core_ext'
-require 'active_support/testing/assertions'
-require 'rr'
+require "minitest/autorun"
+require "minitest/pride"
+require "active_support"
+require "active_support/core_ext"
+require "active_support/testing/assertions"
+require "rr"
 
-Dir[File.dirname(__FILE__) + '/support/*.rb'].each do |file|
-  autoload File.basename(file, '.rb').camelize, file
+Dir[File.dirname(__FILE__) + "/support/*.rb"].each do |file|
+  autoload File.basename(file, ".rb").camelize, file
 end
 
 ActiveSupport::TestCase.test_order = :random
@@ -33,7 +33,7 @@ def tmp_path
 end
 
 def mk_tmp
-  File.expand_path('../tmp', __FILE__).tap do |path|
+  File.expand_path("../tmp", __FILE__).tap do |path|
     FileUtils.mkdir(path)
   end
 end

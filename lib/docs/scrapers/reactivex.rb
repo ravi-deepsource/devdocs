@@ -1,14 +1,14 @@
 module Docs
   class Reactivex < UrlScraper
-    self.name = 'ReactiveX'
-    self.type = 'reactivex'
-    self.base_url = 'http://reactivex.io/'
-    self.root_path = 'intro.html'
+    self.name = "ReactiveX"
+    self.type = "reactivex"
+    self.base_url = "http://reactivex.io/"
+    self.root_path = "intro.html"
     self.links = {
-      home: 'http://reactivex.io/'
+      home: "http://reactivex.io/"
     }
 
-    html_filters.push 'reactivex/entries', 'reactivex/clean_html'
+    html_filters.push "reactivex/entries", "reactivex/clean_html"
 
     options[:download_images] = false
 
@@ -21,7 +21,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      get_latest_github_commit_date('ReactiveX', 'reactivex.github.io', opts)
+      get_latest_github_commit_date("ReactiveX", "reactivex.github.io", opts)
     end
   end
 end

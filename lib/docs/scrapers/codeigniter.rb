@@ -1,19 +1,19 @@
 module Docs
   class Codeigniter < UrlScraper
-    self.name = 'CodeIgniter'
-    self.type = 'sphinx'
-    self.base_url = 'https://www.codeigniter.com/user_guide/'
-    self.root_path = 'index.html'
+    self.name = "CodeIgniter"
+    self.type = "sphinx"
+    self.base_url = "https://www.codeigniter.com/user_guide/"
+    self.root_path = "index.html"
     self.links = {
-      home: 'https://codeigniter.com/',
-      code: 'https://github.com/bcit-ci/CodeIgniter'
+      home: "https://codeigniter.com/",
+      code: "https://github.com/bcit-ci/CodeIgniter"
     }
 
-    html_filters.push 'codeigniter/entries', 'sphinx/clean_html'
+    html_filters.push "codeigniter/entries", "sphinx/clean_html"
 
-    options[:container] = '.document'
+    options[:container] = ".document"
 
-    options[:skip] = %w(
+    options[:skip] = %w[
       license.html
       changelog.html
       DCO.html
@@ -22,7 +22,7 @@ module Docs
       general/credits.html
       libraries/index.html
       helpers/index.html
-    )
+    ]
 
     options[:skip_patterns] = [
       /\Acontributing/,
@@ -35,13 +35,13 @@ module Docs
       Licensed under the MIT License.
     HTML
 
-    version '3' do
-      self.release = '3.1.8'
+    version "3" do
+      self.release = "3.1.8"
     end
 
     def get_latest_version(opts)
-      doc = fetch_doc('https://codeigniter.com/user_guide/changelog.html', opts)
-      header = doc.at_css('#change-log h2')
+      doc = fetch_doc("https://codeigniter.com/user_guide/changelog.html", opts)
+      header = doc.at_css("#change-log h2")
       header.content.scan(/([0-9.]+)/)[0][0]
     end
   end

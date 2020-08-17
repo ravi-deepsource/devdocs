@@ -1,17 +1,17 @@
 module Docs
   class Pug < UrlScraper
-    self.type = 'pug'
-    self.base_url = 'https://pugjs.org/'
-    self.root_path = 'api/getting-started.html'
-    self.release = '2.0.3'
+    self.type = "pug"
+    self.base_url = "https://pugjs.org/"
+    self.root_path = "api/getting-started.html"
+    self.release = "2.0.3"
     self.links = {
-      home: 'https://pugjs.org/',
-      code: 'https://github.com/pugjs/pug'
+      home: "https://pugjs.org/",
+      code: "https://github.com/pugjs/pug"
     }
 
-    html_filters.push 'pug/clean_html', 'pug/entries'
+    html_filters.push "pug/clean_html", "pug/entries"
 
-    options[:container] = 'body > .container'
+    options[:container] = "body > .container"
 
     options[:attribution] = <<-HTML
       &copy; Pug authors<br>
@@ -19,7 +19,7 @@ module Docs
     HTML
 
     def get_latest_version(opts)
-      get_npm_version('pug', opts)
+      get_npm_version("pug", opts)
     end
 
     private
